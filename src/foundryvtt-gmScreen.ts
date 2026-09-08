@@ -122,6 +122,10 @@ Hooks.once('ready', async () => {
 });
 
 function addGmScreenButton(html: HTMLElement) {
+  if (html.querySelector('button.gm-screen-button')) {
+    return;
+  }
+
   const actionButtons = html.querySelector('.header-actions');
 
   const gmScreenButtonHtml = `<button class="gm-screen-button">
