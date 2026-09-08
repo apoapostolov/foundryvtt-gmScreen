@@ -417,7 +417,5 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
     });
 
     await getGame().settings.set(MODULE_ID, MySettings.gmScreenConfig, newGmScreenConfig);
-
-    getGame().modules.get('gm-screen')?.api?.refreshGmScreen();
   }
 }
