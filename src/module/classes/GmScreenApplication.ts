@@ -273,21 +273,6 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     this.setGridData(newGridData);
   }
 
-  bringToFront() {
-    if (!this.displayDrawer) {
-      super.bringToFront();
-      return;
-    }
-    if (this.position.zIndex === foundry.applications.api.ApplicationV2._maxZ) {
-      return;
-    }
-
-    foundry.applications.api.ApplicationV2._maxZ += 1;
-    this.setPosition({
-      zIndex: foundry.applications.api.ApplicationV2._maxZ,
-    });
-  }
-
   /**
    * Set the GM Screen Visibility. By default will toggle the current state.
    */
