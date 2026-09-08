@@ -486,6 +486,11 @@ $transition-timing: 400ms;
   .journal-entry:not(.expanded) .journal-sidebar {
     width: var(--sidebar-width-collapsed, 40px);
     flex-basis: var(--sidebar-width-collapsed, 40px);
+
+    .page-ownership,
+    .crlngn-page-ownership {
+      display: none;
+    }
   }
 
   .gm-screen-grid-cell-content.gm-screen-journal-sidebar-open .journal-sidebar,
