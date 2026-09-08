@@ -1,5 +1,5 @@
-import { MODULE_ID, MySettings } from '../constants';
 import { extractCoreJournalView, getGame } from '../helpers';
+import { MODULE_ID, MySettings } from '../constants';
 
 export class CompactJournalEntryDisplay extends foundry.applications.sheets.journal.JournalEntrySheet {
   cellId: string;
@@ -48,17 +48,40 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
         if (coreView) {
           gridCellContent.append(coreView);
         }
+      } else {
+        this._syncHiddenSidebarRail(gridCellContent);
       }
     }
 
     if (!this._initialRenderDone) {
       this._initialRenderDone = true;
       if (!getGame().settings.get(MODULE_ID, MySettings.plainJournalCells)) {
-        // incomplete type definitions
-        // @ts-expect-error
         this.toggleSidebar();
       }
     }
+  }
+
+  _syncHiddenSidebarRail(gridCellContent: Element) {
+    gridCellContent.querySelectorAll('.gm-screen-journal-sidebar-rail').forEach((rail) => rail.remove());
+    const hidden = !!getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar);
+    if (!hidden || !this.form?.querySelector('.journal-sidebar')) {
+      return;
+    }
+    const rail = document.createElement('div');
+    rail.className = 'gm-screen-journal-sidebar-rail';
+    rail.setAttribute('aria-hidden', 'true');
+    gridCellContent.append(rail);
+  }
+
+  toggleSidebar() {
+    // incomplete type definitions
+    // @ts-expect-error
+    super.toggleSidebar();
+    if (!getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar)) {
+      return;
+    }
+    this.element.style.pointerEvents = '';
+    this.element.classList.remove('collapsing');
   }
 
   /** @override */

@@ -25,6 +25,7 @@ export enum MySettings {
   migrated = 'migrated',
   condensedButton = 'condensedButton',
   constrainCellContent = 'constrain-cell-content',
+  hiddenJournalSidebar = 'hidden-journal-sidebar',
   reset = 'reset',
   rightMargin = 'right-margin',
   rows = 'rows',
