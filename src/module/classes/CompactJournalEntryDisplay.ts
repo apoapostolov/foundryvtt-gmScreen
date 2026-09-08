@@ -71,6 +71,6 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
       return super.close(...args);
     }
     // prevent closing if esc is pressed
-    return Promise.resolve(this);
+    return this;
   }
 }
