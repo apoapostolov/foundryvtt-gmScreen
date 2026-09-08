@@ -1,3 +1,6 @@
+import { MODULE_ID, MySettings } from '../constants';
+import { getGame } from '../helpers';
+
 export class CompactJournalEntryPageDisplay
   extends foundry.applications.sheets.journal.JournalEntryPageHandlebarsSheet
 {
@@ -67,10 +70,25 @@ export class CompactJournalEntryPageDisplay
         gridCellContent.replaceChildren(video);
         break;
       }
-      default:
-        if (this.options.document.text.content) {
-          gridCellContent.innerHTML = this.options.document.text.content;
+      default: {
+        const html = this.options.document.text.content;
+        if (!html) {
+          break;
         }
+        const plain = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
+        if (plain) {
+          const page = document.createElement('article');
+          page.className = 'journal-entry-page text';
+          const content = document.createElement('section');
+          content.className = 'journal-page-content';
+          content.innerHTML = html;
+          page.append(content);
+          gridCellContent.replaceChildren(page);
+        } else {
+          gridCellContent.innerHTML = html;
+        }
+        break;
+      }
     }
 
     this.form.style.display = 'none';
