@@ -11,3 +11,29 @@
 - No src/ changes. No upstream PR.
 - Commit `64663e9` `chore: add local agent workspace and audit notes`
   on `apoapostolov/foundryvtt-gmScreen` branch `apo/develop`.
+
+## 2026-09-08 PRs to samulopez
+
+origin/main has kvndrsslr emptyClose (#154) cherry-picked.
+
+Opened one issue+PR per remaining audit item plus the three requested features:
+
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/156 firefox gap
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/158 click listeners
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/160 await setGridData
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/162 double refresh
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/164 compact close
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/166 toggle unrendered
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/168 duplicate journal button
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/170 bringToFront / _maxZ
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/172 quiet migration
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/174 page src innerHTML
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/176 span overlap confirm
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/178 drawer handle flush
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/180 plain journal cells
+- https://github.com/samulopez/foundryvtt-gmScreen/pull/182 constrain cell content
+
+Drawer gap live evidence (v14.367, crlngn-ui world): handle 6px above viewport because `.sheet-tabs.tabs` min-height 36px vs 28px button.
+
+These PRs conflict on shared files. Merge one, rebase the rest.
+
