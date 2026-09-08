@@ -9,3 +9,5 @@
 - Branch `apo/develop` from `upstream/main` at `ec0462a`.
 - Source audit in `dev/AUDIT.md`. Plan in `dev/TODO.md`.
 - No src/ changes. No upstream PR.
+- Commit `64663e9` `chore: add local agent workspace and audit notes`
+  on `apoapostolov/foundryvtt-gmScreen` branch `apo/develop`.
