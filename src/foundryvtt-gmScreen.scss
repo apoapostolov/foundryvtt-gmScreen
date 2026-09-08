@@ -62,9 +62,15 @@ $transition-timing: 400ms;
 
     .gm-screen-actions {
       position: absolute;
-      bottom: calc(100% - 1px);
+      bottom: 100%;
       right: 0;
       z-index: -1;
+      min-height: 0;
+      height: auto;
+      align-items: flex-end;
+      overflow: visible;
+      padding-top: 0;
+      padding-bottom: 0;
 
       > *:not(.gm-screen-button) {
         transform: translateY(100%);
@@ -72,6 +78,12 @@ $transition-timing: 400ms;
 
       > * {
         transition: transform $transition-timing ease-in;
+      }
+
+      button {
+        height: auto;
+        min-height: 0;
+        margin: 0;
       }
     }
 
@@ -391,6 +403,61 @@ $transition-timing: 400ms;
       height: 28px;
       line-height: normal;
     }
+  }
+}
+
+
+
+.gm-screen-app.plain-journal-cells {
+  .gm-screen-grid-cell-content {
+    .journal-sheet,
+    .journal-entry,
+    .journal-entry-content,
+    .journal-entry-page,
+    .journal-page-content,
+    .window-content {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    .journal-sidebar,
+    .directory,
+    nav.pages-list {
+      display: none;
+    }
+
+    img,
+    table,
+    pre {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.gm-screen-app.constrain-cell-content {
+  .gm-screen-grid-cell,
+  .gm-screen-grid-cell-content-wrapper {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .gm-screen-grid-cell-content {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .gm-screen-grid-cell-content img,
+  .gm-screen-grid-cell-content video,
+  .gm-screen-grid-cell-content iframe,
+  .gm-screen-grid-cell-content canvas,
+  .gm-screen-grid-cell-content table,
+  .gm-screen-grid-cell-content pre {
+    max-width: 100% !important;
+    height: auto;
   }
 }
 

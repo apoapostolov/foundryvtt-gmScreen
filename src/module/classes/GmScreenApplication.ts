@@ -82,6 +82,8 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
 
   draggedTab: HTMLElement | undefined;
 
+  listenerAbort?: AbortController;
+
   constructor(options = {}) {
     super(options);
     this.expanded = false;
@@ -234,7 +236,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       newGridData,
     });
 
-    this.setGridData(newGridData);
+    await this.setGridData(newGridData);
   }
 
   /**
@@ -270,36 +272,26 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       entries: newEntries,
     };
 
-    this.setGridData(newGridData);
-  }
-
-  bringToFront() {
-    if (!this.displayDrawer) {
-      super.bringToFront();
-      return;
-    }
-    if (this.position.zIndex === foundry.applications.api.ApplicationV2._maxZ) {
-      return;
-    }
-
-    foundry.applications.api.ApplicationV2._maxZ += 1;
-    this.setPosition({
-      zIndex: foundry.applications.api.ApplicationV2._maxZ,
-    });
+    await this.setGridData(newGridData);
   }
 
   /**
    * Set the GM Screen Visibility. By default will toggle the current state.
    */
   toggleGmScreenVisibility(expanded = !this.expanded) {
+    const el = this.element;
+    if (!(el instanceof HTMLElement)) {
+      return;
+    }
+
     this.expanded = expanded;
 
     if (this.expanded) {
       this.bringToFront();
-      this.element.classList.add('expanded');
-      this.element.style.setProperty('z-index', this.position.zIndex.toString());
+      el.classList.add('expanded');
+      el.style.setProperty('z-index', this.position.zIndex.toString());
     } else {
-      this.element.classList.remove('expanded');
+      el.classList.remove('expanded');
     }
   }
 
@@ -316,7 +308,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
 
     if (proceed) {
       this.apps = {};
-      this.setGridData({
+      await this.setGridData({
         ...this.activeGrid,
         entries: {},
       });
@@ -410,11 +402,11 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
           return;
         }
 
-        this.removeEntryFromActiveGrid(entryId, gridCellId);
+        await this.removeEntryFromActiveGrid(entryId, gridCellId);
         break;
       }
       case ClickAction.clearGrid: {
-        this.handleClear();
+        await this.handleClear();
         break;
       }
       case ClickAction.configureCell: {
@@ -472,11 +464,22 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
             problemCoordinates,
           });
 
-          // get any overlapped cells and remove them
-          Object.values(newEntries).forEach((entry) => {
-            if (problemCoordinates.includes(entry.entryId) && entry.entryId !== newCell.entryId) {
-              delete newEntries[entry.entryId];
+          const overlappingEntries = Object.values(newEntries).filter(
+            (entry) => problemCoordinates.includes(entry.entryId) && entry.entryId !== newCell.entryId
+          );
+          if (overlappingEntries.length) {
+            const proceed = await foundry.applications.api.DialogV2.confirm({
+              title: getLocalization().localize(`${MODULE_ABBREV}.warnings.overlapConfirm.Title`),
+              content: getLocalization().localize(`${MODULE_ABBREV}.warnings.overlapConfirm.Content`),
+            });
+            if (!proceed) {
+              return;
             }
+          }
+
+          // get any overlapped cells and remove them
+          overlappingEntries.forEach((entry) => {
+            delete newEntries[entry.entryId];
           });
 
           log(false, 'newEntries', newEntries);
@@ -486,7 +489,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
             entries: newEntries,
           };
 
-          this.setGridData(newGridData);
+          await this.setGridData(newGridData);
         } catch (error) {
           log(false, 'User exited configure cell Dialog.', error);
         }
@@ -612,7 +615,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
         const newEntryId = `${gridElementPosition.x}-${gridElementPosition.y}`;
         const fp = new foundry.applications.apps.FilePicker({
           type: 'image',
-          callback: (path) => {
+          callback: async (path) => {
             const newEntry: GmScreenGridEntry = {
               ...gridElementPosition,
               entryId: newEntryId,
@@ -623,7 +626,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
               imagePath: path,
             };
 
-            this.addEntryToActiveGrid(newEntry);
+            await this.addEntryToActiveGrid(newEntry);
           },
         });
         fp.render({ force: true });
@@ -838,18 +841,26 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   }
 
   addListeners() {
+    this.listenerAbort?.abort();
+    this.listenerAbort = new AbortController();
+    const { signal } = this.listenerAbort;
+
     this.element.querySelectorAll('.gm-screen-actions button, .gm-screen-grid-cell-header a').forEach((btn) => {
-      btn.addEventListener('click', this.handleClickEvent.bind(this));
+      btn.addEventListener('click', (event) => this.handleClickEvent(event as MouseEvent), { signal });
     });
 
-    this.element.querySelector('.gm-screen-button')?.addEventListener('contextmenu', async () => {
-      if (!getGame().user?.isGM) {
-        return;
-      }
+    this.element.querySelector('.gm-screen-button')?.addEventListener(
+      'contextmenu',
+      async () => {
+        if (!getGame().user?.isGM) {
+          return;
+        }
 
-      const config = new GmScreenSettings({});
-      await config.render({ force: true });
-    });
+        const config = new GmScreenSettings({});
+        await config.render({ force: true });
+      },
+      { signal }
+    );
   }
 
   /**
@@ -1341,6 +1352,8 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     const drawerHeight = getGame().settings.get(MODULE_ID, MySettings.drawerHeight);
     const drawerOpacity = getGame().settings.get(MODULE_ID, MySettings.drawerOpacity);
     const condensedButton = getGame().settings.get(MODULE_ID, MySettings.condensedButton);
+    const plainJournalCells = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
+    const constrainCellContent = getGame().settings.get(MODULE_ID, MySettings.constrainCellContent);
 
     const grids = this.getHydratedGrids();
 
@@ -1354,6 +1367,8 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       grids,
       isGM: !!getGame().user?.isGM,
       condensedButton,
+      plainJournalCells,
+      constrainCellContent,
       data: this.data,
       columns: this.columns,
       rows: this.rows,
@@ -1440,6 +1455,6 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       isDndNpcStatBlock: false,
     };
 
-    this.addEntryToActiveGrid(newEntry);
+    await this.addEntryToActiveGrid(newEntry);
   }
 }

@@ -20,6 +20,8 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
 ) {
   draggedRow: HTMLElement | undefined;
 
+  listenerAbort?: AbortController;
+
   static init() {
     getGame().settings.registerMenu(MODULE_ID, 'menu', {
       name: `${MODULE_ABBREV}.settings.${MySettings.gmScreenConfig}.Name`,
@@ -126,6 +128,30 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       scope: 'client',
       config: true,
       hint: `${MODULE_ABBREV}.settings.${MySettings.condensedButton}.Hint`,
+    });
+
+    getGame().settings.register(MODULE_ID, MySettings.plainJournalCells, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.plainJournalCells}.Name`,
+      default: false,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.plainJournalCells}.Hint`,
+      onChange: (enabled) => {
+        document.getElementById('gm-screen-app')?.classList.toggle('plain-journal-cells', !!enabled);
+      },
+    });
+
+    getGame().settings.register(MODULE_ID, MySettings.constrainCellContent, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.constrainCellContent}.Name`,
+      default: false,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.constrainCellContent}.Hint`,
+      onChange: (enabled) => {
+        document.getElementById('gm-screen-app')?.classList.toggle('constrain-cell-content', !!enabled);
+      },
     });
 
     getGame().settings.register(MODULE_ID, MySettings.reset, {
@@ -312,23 +338,28 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
   }
 
   addEventListeners() {
-    const html = this.element;
-    html.addEventListener('click', (e) => {
-      if (e == null || !(e.target instanceof HTMLElement)) {
-        return;
-      }
-      const currentTarget = e.target.closest('button');
-      if (!currentTarget) {
-        return;
-      }
-      log(false, 'a button was clicked', { e, currentTarget });
-      if (currentTarget.classList.contains('add-row')) {
-        this.handleNewRowClick(currentTarget);
-      }
-      if (currentTarget.classList.contains('delete-row')) {
-        this.handleDeleteRowClick(currentTarget);
-      }
-    });
+    this.listenerAbort?.abort();
+    this.listenerAbort = new AbortController();
+    this.element.addEventListener(
+      'click',
+      (e) => {
+        if (e == null || !(e.target instanceof HTMLElement)) {
+          return;
+        }
+        const currentTarget = e.target.closest('button');
+        if (!currentTarget) {
+          return;
+        }
+        log(false, 'a button was clicked', { e, currentTarget });
+        if (currentTarget.classList.contains('add-row')) {
+          this.handleNewRowClick(currentTarget);
+        }
+        if (currentTarget.classList.contains('delete-row')) {
+          this.handleDeleteRowClick(currentTarget);
+        }
+      },
+      { signal: this.listenerAbort.signal }
+    );
   }
 
   async _onRender() {
@@ -417,7 +448,5 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
     });
 
     await getGame().settings.set(MODULE_ID, MySettings.gmScreenConfig, newGmScreenConfig);
-
-    getGame().modules.get('gm-screen')?.api?.refreshGmScreen();
   }
 }

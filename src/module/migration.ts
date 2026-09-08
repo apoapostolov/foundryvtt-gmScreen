@@ -25,10 +25,9 @@ export async function gmScreenMigrate() {
     if (migrated.version === NEEDS_MIGRATION_VERSION) return;
   }
 
-  ui.notifications?.notify('GM Screen | Beginning Migration to updated schema.', 'info');
-
   const gmScreenConfig = getGame().settings.get(MODULE_ID, MySettings.gmScreenConfig) as unknown as GmScreenConfig1;
   if (!!gmScreenConfig?.grid?.entries && Array.isArray(gmScreenConfig.grid.entries)) {
+    ui.notifications?.notify('GM Screen | Beginning Migration to updated schema.', 'info');
     // need to convert gmscreenconfig.grid.entries from array to object
 
     const migratedEntries: GmScreenGrid['entries'] = gmScreenConfig.grid.entries.reduce((acc, entry) => {
@@ -61,9 +60,8 @@ export async function gmScreenMigrate() {
     });
 
     await getGame().settings.set(MODULE_ID, MySettings.gmScreenConfig, output);
+    ui.notifications?.notify('GM Screen | Migration Complete.', 'info');
   }
-
-  ui.notifications?.notify('GM Screen | Migration Complete.', 'info');
 
   await getGame().settings.set(MODULE_ID, MySettings.migrated, { status: true, version: NEEDS_MIGRATION_VERSION });
 }

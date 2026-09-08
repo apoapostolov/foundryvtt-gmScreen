@@ -36,24 +36,37 @@ export class CompactJournalEntryPageDisplay
     const gridCellLink = cell.querySelector('a[data-link]');
 
     switch (this.options.document.type) {
-      case 'image':
-        gridCellContent.innerHTML = `<img src="${this.options.document.src}" alt="${this.options.document.image.caption || 'image'}"></img>`;
-        if (!gridCellLink) {
-          break;
+      case 'image': {
+        const img = document.createElement('img');
+        img.src = this.options.document.src ?? '';
+        img.alt = this.options.document.image.caption || 'image';
+        gridCellContent.replaceChildren(img);
+        if (gridCellLink) {
+          gridCellLink.removeAttribute('data-link');
+          gridCellLink.setAttribute('data-action', 'open');
         }
-        gridCellLink.removeAttribute('data-link');
-        gridCellLink.setAttribute('data-action', 'open');
         break;
-      case 'pdf':
-        gridCellContent.innerHTML = `<iframe src="scripts/pdfjs/web/viewer.html?file=${
-          this.options.document.src?.startsWith('https://') || this.options.document.src?.startsWith('http://')
-            ? this.options.document.src
-            : `/${this.options.document.src}`
-        }"></iframe>`;
+      }
+      case 'pdf': {
+        const iframe = document.createElement('iframe');
+        const src = this.options.document.src ?? '';
+        const file = src.startsWith('https://') || src.startsWith('http://') ? src : `/${src}`;
+        iframe.src = `scripts/pdfjs/web/viewer.html?file=${file}`;
+        gridCellContent.replaceChildren(iframe);
         break;
-      case 'video':
-        gridCellContent.innerHTML = `<video src="${this.options.document.src}" ${this.options.document.video.controls ? 'controls' : ''} ${this.options.document.video.autoplay ? 'autoplay' : ''}></video>`;
+      }
+      case 'video': {
+        const video = document.createElement('video');
+        video.src = this.options.document.src ?? '';
+        if (this.options.document.video.controls) {
+          video.controls = true;
+        }
+        if (this.options.document.video.autoplay) {
+          video.autoplay = true;
+        }
+        gridCellContent.replaceChildren(video);
         break;
+      }
       default:
         if (this.options.document.text.content) {
           gridCellContent.innerHTML = this.options.document.text.content;
@@ -73,6 +86,6 @@ export class CompactJournalEntryPageDisplay
       return super.close(...args);
     }
     // prevent closing if esc is pressed
-    return this;
+    return Promise.resolve(this);
   }
 }
