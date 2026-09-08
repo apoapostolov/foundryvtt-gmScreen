@@ -49,6 +49,10 @@
         "Name": "Condensed GM Screen Button",
         "Hint": "Removes text from the button"
       },
+      "plain-journal-cells": {
+        "Name": "Plain Journal Cells",
+        "Hint": "Show journal pages in cells without sheet chrome that makes them spill out."
+      },
       "reset": {
         "Name": "Reset",
         "Hint": "Clear the Grid entries. This action can not be undone."
