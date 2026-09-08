@@ -778,6 +778,11 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   }
 
   async _onRender() {
+    this.element.classList.toggle(
+      'hidden-journal-sidebar',
+      !!getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar)
+    );
+
     const dragDrop = new foundry.applications.ux.DragDrop({
       dragSelector: '.gm-screen-grid-cell',
       dropSelector: '.gm-screen-grid-cell',
@@ -1341,6 +1346,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     const drawerHeight = getGame().settings.get(MODULE_ID, MySettings.drawerHeight);
     const drawerOpacity = getGame().settings.get(MODULE_ID, MySettings.drawerOpacity);
     const condensedButton = getGame().settings.get(MODULE_ID, MySettings.condensedButton);
+    const hiddenJournalSidebar = getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar);
 
     const grids = this.getHydratedGrids();
 
@@ -1354,6 +1360,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       grids,
       isGM: !!getGame().user?.isGM,
       condensedButton,
+      hiddenJournalSidebar,
       data: this.data,
       columns: this.columns,
       rows: this.rows,

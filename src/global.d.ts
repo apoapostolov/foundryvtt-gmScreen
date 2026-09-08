@@ -21,6 +21,7 @@ declare global {
       version: string;
     };
     'gm-screen.condensedButton': boolean;
+    'gm-screen.hidden-journal-sidebar': boolean;
     'gm-screen.reset': boolean;
     'gm-screen.right-margin': number;
     'gm-screen.rows': number;
