@@ -292,14 +292,19 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
    * Set the GM Screen Visibility. By default will toggle the current state.
    */
   toggleGmScreenVisibility(expanded = !this.expanded) {
+    const el = this.element;
+    if (!(el instanceof HTMLElement)) {
+      return;
+    }
+
     this.expanded = expanded;
 
     if (this.expanded) {
       this.bringToFront();
-      this.element.classList.add('expanded');
-      this.element.style.setProperty('z-index', this.position.zIndex.toString());
+      el.classList.add('expanded');
+      el.style.setProperty('z-index', this.position.zIndex.toString());
     } else {
-      this.element.classList.remove('expanded');
+      el.classList.remove('expanded');
     }
   }
 
