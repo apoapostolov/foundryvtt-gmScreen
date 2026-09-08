@@ -234,7 +234,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       newGridData,
     });
 
-    this.setGridData(newGridData);
+    await this.setGridData(newGridData);
   }
 
   /**
@@ -270,7 +270,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       entries: newEntries,
     };
 
-    this.setGridData(newGridData);
+    await this.setGridData(newGridData);
   }
 
   bringToFront() {
@@ -316,7 +316,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
 
     if (proceed) {
       this.apps = {};
-      this.setGridData({
+      await this.setGridData({
         ...this.activeGrid,
         entries: {},
       });
@@ -410,11 +410,11 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
           return;
         }
 
-        this.removeEntryFromActiveGrid(entryId, gridCellId);
+        await this.removeEntryFromActiveGrid(entryId, gridCellId);
         break;
       }
       case ClickAction.clearGrid: {
-        this.handleClear();
+        await this.handleClear();
         break;
       }
       case ClickAction.configureCell: {
@@ -486,7 +486,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
             entries: newEntries,
           };
 
-          this.setGridData(newGridData);
+          await this.setGridData(newGridData);
         } catch (error) {
           log(false, 'User exited configure cell Dialog.', error);
         }
@@ -612,7 +612,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
         const newEntryId = `${gridElementPosition.x}-${gridElementPosition.y}`;
         const fp = new foundry.applications.apps.FilePicker({
           type: 'image',
-          callback: (path) => {
+          callback: async (path) => {
             const newEntry: GmScreenGridEntry = {
               ...gridElementPosition,
               entryId: newEntryId,
@@ -623,7 +623,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
               imagePath: path,
             };
 
-            this.addEntryToActiveGrid(newEntry);
+            await this.addEntryToActiveGrid(newEntry);
           },
         });
         fp.render({ force: true });
@@ -1440,6 +1440,6 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       isDndNpcStatBlock: false,
     };
 
-    this.addEntryToActiveGrid(newEntry);
+    await this.addEntryToActiveGrid(newEntry);
   }
 }
