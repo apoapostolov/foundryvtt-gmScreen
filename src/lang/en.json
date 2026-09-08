@@ -51,7 +51,7 @@
       },
       "plain-journal-cells": {
         "Name": "Plain Journal Cells",
-        "Hint": "Show journal pages in cells without sheet chrome that makes them spill out."
+        "Hint": "Show the journal page with Foundry's built-in look, without extra sheet chrome."
       },
       "reset": {
         "Name": "Reset",
