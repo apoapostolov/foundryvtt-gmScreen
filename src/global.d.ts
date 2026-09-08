@@ -21,6 +21,7 @@ declare global {
       version: string;
     };
     'gm-screen.condensedButton': boolean;
+    'gm-screen.constrain-cell-content': boolean;
     'gm-screen.reset': boolean;
     'gm-screen.right-margin': number;
     'gm-screen.rows': number;

@@ -24,6 +24,7 @@ export enum MySettings {
   gmScreenConfig = 'gm-screen-config',
   migrated = 'migrated',
   condensedButton = 'condensedButton',
+  constrainCellContent = 'constrain-cell-content',
   reset = 'reset',
   rightMargin = 'right-margin',
   rows = 'rows',

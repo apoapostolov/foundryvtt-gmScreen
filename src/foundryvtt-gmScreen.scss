@@ -394,4 +394,30 @@ $transition-timing: 400ms;
   }
 }
 
+
+.gm-screen-app.constrain-cell-content {
+  .gm-screen-grid-cell,
+  .gm-screen-grid-cell-content-wrapper {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .gm-screen-grid-cell-content {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  .gm-screen-grid-cell-content img,
+  .gm-screen-grid-cell-content video,
+  .gm-screen-grid-cell-content iframe,
+  .gm-screen-grid-cell-content canvas,
+  .gm-screen-grid-cell-content table,
+  .gm-screen-grid-cell-content pre {
+    max-width: 100% !important;
+    height: auto;
+  }
+}
+
 @include meta.load-css('styles/package-overrides.scss');

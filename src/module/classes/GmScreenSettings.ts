@@ -128,6 +128,18 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       hint: `${MODULE_ABBREV}.settings.${MySettings.condensedButton}.Hint`,
     });
 
+    getGame().settings.register(MODULE_ID, MySettings.constrainCellContent, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.constrainCellContent}.Name`,
+      default: false,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.constrainCellContent}.Hint`,
+      onChange: (enabled) => {
+        document.getElementById('gm-screen-app')?.classList.toggle('constrain-cell-content', !!enabled);
+      },
+    });
+
     getGame().settings.register(MODULE_ID, MySettings.reset, {
       name: `${MODULE_ABBREV}.settings.${MySettings.reset}.Name`,
       default: false,

@@ -49,6 +49,10 @@
         "Name": "Condensed GM Screen Button",
         "Hint": "Removes text from the button"
       },
+      "constrain-cell-content": {
+        "Name": "Constrain Cell Content",
+        "Hint": "Clip anything that tries to sit wider than its cell."
+      },
       "reset": {
         "Name": "Reset",
         "Hint": "Clear the Grid entries. This action can not be undone."
