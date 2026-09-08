@@ -90,7 +90,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
 
   draggedTab: HTMLElement | undefined;
 
-  pendingCellRefresh: PendingCellRefresh | undefined;
+  listenerAbort?: AbortController;
 
   constructor(options = {}) {
     super(options);
@@ -1027,19 +1027,27 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     });
   }
 
-  addListeners(element: HTMLElement = this.element) {
-    element.querySelectorAll('.gm-screen-actions button, .gm-screen-grid-cell-header a').forEach((btn) => {
-      btn.addEventListener('click', this.handleClickEvent.bind(this));
+  addListeners() {
+    this.listenerAbort?.abort();
+    this.listenerAbort = new AbortController();
+    const { signal } = this.listenerAbort;
+
+    this.element.querySelectorAll('.gm-screen-actions button, .gm-screen-grid-cell-header a').forEach((btn) => {
+      btn.addEventListener('click', (event) => this.handleClickEvent(event as MouseEvent), { signal });
     });
 
-    element.querySelector('.gm-screen-button')?.addEventListener('contextmenu', async () => {
-      if (!getGame().user?.isGM) {
-        return;
-      }
+    this.element.querySelector('.gm-screen-button')?.addEventListener(
+      'contextmenu',
+      async () => {
+        if (!getGame().user?.isGM) {
+          return;
+        }
 
-      const config = new GmScreenSettings({});
-      await config.render({ force: true });
-    });
+        const config = new GmScreenSettings({});
+        await config.render({ force: true });
+      },
+      { signal }
+    );
   }
 
   /**
