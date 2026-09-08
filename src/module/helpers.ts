@@ -106,6 +106,14 @@ export function getUserCellConfigurationInput(
   });
 }
 
+function parseCssPx(value: string | null | undefined, fallback = 0) {
+  if (!value) {
+    return fallback;
+  }
+  const match = value.match(numberRegex);
+  return match ? Number(match[0]) : fallback;
+}
+
 export function getGridElementsPosition(element: HTMLElement) {
   const relevantGridElement = element.parentElement?.closest('.gm-screen-grid');
   if (!relevantGridElement) {
@@ -123,17 +131,25 @@ export function getGridElementsPosition(element: HTMLElement) {
     gridColGap: vanillaGridElementStyles['grid-column-gap'],
   });
 
-  const gap = Number(vanillaGridElementStyles['grid-row-gap'].match(numberRegex)[0]);
+  const gap = parseCssPx(
+    vanillaGridElementStyles.rowGap ||
+      vanillaGridElementStyles.columnGap ||
+      vanillaGridElementStyles.gap ||
+      vanillaGridElementStyles['grid-row-gap']
+  );
 
   // Get the css attribute grid-template-columns from the css of class grid
   // split on whitespace and get the length, this will give you the column dimensions
-  const cols = vanillaGridElementStyles['grid-template-columns'].split(' ');
-  const colWidth = Number(cols[0].match(numberRegex)[0]);
+  const cols = vanillaGridElementStyles.gridTemplateColumns.split(' ').filter(Boolean);
+  const colWidth = parseCssPx(cols[0]);
 
   // Get the css attribute grid-template-rows from the css of class grid
   // split on whitespace and get the length, this will give you the column dimensions
-  const rows = vanillaGridElementStyles['grid-template-rows'].split(' ');
-  const rowHeight = Number(rows[0].match(numberRegex)[0]);
+  const rows = vanillaGridElementStyles.gridTemplateRows.split(' ').filter(Boolean);
+  const rowHeight = parseCssPx(rows[0]);
+  if (!colWidth || !rowHeight) {
+    return { x: 1, y: 1 };
+  }
 
   // to figure out which column/row this element is in within the gridElement, we have to do math
   const elementBounds = element.getBoundingClientRect();
