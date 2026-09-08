@@ -49,9 +49,9 @@
         "Name": "Condensed GM Screen Button",
         "Hint": "Removes text from the button"
       },
-      "plain-journal-cells": {
-        "Name": "Plain Journal Cells",
-        "Hint": "Show journal pages in cells without sheet chrome that makes them spill out."
+      "constrain-cell-content": {
+        "Name": "Constrain Cell Content",
+        "Hint": "Clip anything that tries to sit wider than its cell."
       },
       "reset": {
         "Name": "Reset",

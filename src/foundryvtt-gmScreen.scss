@@ -413,31 +413,28 @@ $transition-timing: 400ms;
 }
 
 
-.gm-screen-app.plain-journal-cells {
+.gm-screen-app.constrain-cell-content {
+  .gm-screen-grid-cell,
+  .gm-screen-grid-cell-content-wrapper {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .gm-screen-grid-cell-content {
-    .journal-sheet,
-    .journal-entry,
-    .journal-entry-content,
-    .journal-entry-page,
-    .journal-page-content,
-    .window-content {
-      min-width: 0 !important;
-      max-width: 100% !important;
-      width: 100% !important;
-    }
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
 
-    .journal-sidebar,
-    .directory,
-    nav.pages-list {
-      display: none;
-    }
-
-    img,
-    table,
-    pre {
-      max-width: 100%;
-      height: auto;
-    }
+  .gm-screen-grid-cell-content img,
+  .gm-screen-grid-cell-content video,
+  .gm-screen-grid-cell-content iframe,
+  .gm-screen-grid-cell-content canvas,
+  .gm-screen-grid-cell-content table,
+  .gm-screen-grid-cell-content pre {
+    max-width: 100% !important;
+    height: auto;
   }
 }
 
