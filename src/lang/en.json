@@ -51,11 +51,11 @@
       },
       "plain-journal-cells": {
         "Name": "Plain Journal Cells",
-        "Hint": "Show journal pages in cells without sheet chrome that makes them spill out."
+        "Hint": "Show the journal page with Foundry's built-in look, without extra sheet chrome."
       },
       "constrain-cell-content": {
         "Name": "Constrain Cell Content",
-        "Hint": "Clip anything that tries to sit wider than its cell."
+        "Hint": "Keep sheets and images inside the cell. Wide content shrinks to fit."
       },
       "reset": {
         "Name": "Reset",

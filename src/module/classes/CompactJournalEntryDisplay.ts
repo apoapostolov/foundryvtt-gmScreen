@@ -1,3 +1,6 @@
+import { MODULE_ID, MySettings } from '../constants';
+import { extractCoreJournalView, getGame } from '../helpers';
+
 export class CompactJournalEntryDisplay extends foundry.applications.sheets.journal.JournalEntrySheet {
   cellId: string;
 
@@ -37,13 +40,24 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
       }
       gridCellContent.classList.remove(...gridCellContent.classList);
       gridCellContent.classList.add('gm-screen-grid-cell-content');
+
+      const plain = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
+      if (plain) {
+        const coreView = extractCoreJournalView(this.form);
+        this.form.style.display = 'none';
+        if (coreView) {
+          gridCellContent.append(coreView);
+        }
+      }
     }
 
     if (!this._initialRenderDone) {
       this._initialRenderDone = true;
-      // incomplete type definitions
-      // @ts-expect-error
-      this.toggleSidebar();
+      if (!getGame().settings.get(MODULE_ID, MySettings.plainJournalCells)) {
+        // incomplete type definitions
+        // @ts-expect-error
+        this.toggleSidebar();
+      }
     }
   }
 

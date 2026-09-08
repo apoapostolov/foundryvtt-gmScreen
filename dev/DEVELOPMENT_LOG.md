@@ -37,3 +37,14 @@ Drawer gap live evidence (v14.367, crlngn-ui world): handle 6px above viewport b
 
 These PRs conflict on shared files. Merge one, rebase the rest.
 
+
+## 2026-09-08 live bugfix: tabs, plain vs constrain
+
+Apo after live-sync:
+
+- Flush-handle PR collapsed tab height to 18px (`height: auto` + tabs min-height 0). Restored 28px, black 1px border, no bottom border, no light-5 outline.
+- Plain Journal Cells CSS was width/min-width 100% (constrain). Constrain class never stuck on the AppV2 root after re-render.
+- Plain now extracts `.journal-entry-pages` out of the JournalEntrySheet form so OSE `ojc-applied` / sheet chrome do not apply. Constrain uses `minmax(0,1fr)` plus inner min-width 0.
+
+Measured OSA v14.367: handle 28px, border `#000`, flush. Constrain: form 677px in 681px cell, min-width 0. Plain: form `display:none`, visible `.journal-entry-content` without sidebar.
+
