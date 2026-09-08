@@ -137,6 +137,7 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       hint: `${MODULE_ABBREV}.settings.${MySettings.plainJournalCells}.Hint`,
       onChange: (enabled) => {
         document.getElementById('gm-screen-app')?.classList.toggle('plain-journal-cells', !!enabled);
+        getGame().modules.get(MODULE_ID)?.api?.refreshGmScreen();
       },
     });
 

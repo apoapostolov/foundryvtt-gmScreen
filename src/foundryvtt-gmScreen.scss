@@ -396,30 +396,18 @@ $transition-timing: 400ms;
 
 
 .gm-screen-app.plain-journal-cells {
-  .gm-screen-grid-cell-content {
-    .journal-sheet,
-    .journal-entry,
-    .journal-entry-content,
-    .journal-entry-page,
-    .journal-page-content,
-    .window-content {
-      min-width: 0 !important;
-      max-width: 100% !important;
-      width: 100% !important;
-    }
+  .gm-screen-grid-cell-content > form.application {
+    display: none;
+  }
 
-    .journal-sidebar,
-    .directory,
-    nav.pages-list {
-      display: none;
-    }
-
-    img,
-    table,
-    pre {
-      max-width: 100%;
-      height: auto;
-    }
+  .gm-screen-grid-cell-content > .journal-entry-content {
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: none;
+    box-shadow: none;
+    border: none;
   }
 }
 
