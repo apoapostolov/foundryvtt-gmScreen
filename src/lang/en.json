@@ -57,6 +57,10 @@
         "Name": "Constrain Cell Content",
         "Hint": "Keep sheets and images inside the cell. Wide content shrinks to fit."
       },
+      "hidden-journal-sidebar": {
+        "Name": "Hidden Journal Sidebar",
+        "Hint": "Hide the table of contents on whole journals in cells until you hover the left edge."
+      },
       "reset": {
         "Name": "Reset",
         "Hint": "Clear the Grid entries. This action can not be undone."

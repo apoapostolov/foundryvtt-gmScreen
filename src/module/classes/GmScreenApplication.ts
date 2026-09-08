@@ -784,11 +784,15 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   async _onRender() {
     this.element.classList.toggle(
       'plain-journal-cells',
-      !!getGame().settings.get(MODULE_ID, MySettings.plainJournalCells),
+      !!getGame().settings.get(MODULE_ID, MySettings.plainJournalCells)
     );
     this.element.classList.toggle(
       'constrain-cell-content',
-      !!getGame().settings.get(MODULE_ID, MySettings.constrainCellContent),
+      !!getGame().settings.get(MODULE_ID, MySettings.constrainCellContent)
+    );
+    this.element.classList.toggle(
+      'hidden-journal-sidebar',
+      !!getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar)
     );
 
     const dragDrop = new foundry.applications.ux.DragDrop({
@@ -1372,6 +1376,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     const condensedButton = getGame().settings.get(MODULE_ID, MySettings.condensedButton);
     const plainJournalCells = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
     const constrainCellContent = getGame().settings.get(MODULE_ID, MySettings.constrainCellContent);
+    const hiddenJournalSidebar = getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar);
 
     const grids = this.getHydratedGrids();
 
@@ -1387,6 +1392,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       condensedButton,
       plainJournalCells,
       constrainCellContent,
+      hiddenJournalSidebar,
       data: this.data,
       columns: this.columns,
       rows: this.rows,

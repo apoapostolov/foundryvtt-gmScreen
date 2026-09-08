@@ -156,6 +156,19 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       },
     });
 
+    getGame().settings.register(MODULE_ID, MySettings.hiddenJournalSidebar, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.hiddenJournalSidebar}.Name`,
+      default: false,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.hiddenJournalSidebar}.Hint`,
+      onChange: (enabled) => {
+        document.getElementById('gm-screen-app')?.classList.toggle('hidden-journal-sidebar', !!enabled);
+        getGame().modules.get(MODULE_ID)?.api?.refreshGmScreen();
+      },
+    });
+
     getGame().settings.register(MODULE_ID, MySettings.reset, {
       name: `${MODULE_ABBREV}.settings.${MySettings.reset}.Name`,
       default: false,
