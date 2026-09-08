@@ -15,7 +15,7 @@ $transition-timing: 400ms;
 
   --gm-screen-background: var(--color-cool-5-90);
   --gm-screen-button-text-color: var(--color-light-3);
-  --gm-screen-button-border-color: var(--color-light-5);
+  --gm-screen-button-border-color: #000;
 
   &.gm-theme-light {
     --gm-screen-background: url(../../../ui/parchment.jpg);
@@ -81,9 +81,16 @@ $transition-timing: 400ms;
       }
 
       button {
-        height: auto;
-        min-height: 0;
+        --button-size: 28px;
+        --button-border-color: var(--gm-screen-button-border-color);
+        height: 28px;
+        min-height: 28px;
         margin: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        line-height: 1;
+        border-bottom-width: 0;
+        box-shadow: none;
       }
     }
 
@@ -118,6 +125,8 @@ $transition-timing: 400ms;
       width: auto;
       background: var(--gm-screen-background);
       border: 1px solid var(--gm-screen-button-border-color);
+      border-bottom-width: 0;
+      box-shadow: none;
       color: var(--gm-screen-button-text-color);
 
       &:focus {
