@@ -20,6 +20,8 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
 ) {
   draggedRow: HTMLElement | undefined;
 
+  listenerAbort?: AbortController;
+
   static init() {
     getGame().settings.registerMenu(MODULE_ID, 'menu', {
       name: `${MODULE_ABBREV}.settings.${MySettings.gmScreenConfig}.Name`,
@@ -312,23 +314,28 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
   }
 
   addEventListeners() {
-    const html = this.element;
-    html.addEventListener('click', (e) => {
-      if (e == null || !(e.target instanceof HTMLElement)) {
-        return;
-      }
-      const currentTarget = e.target.closest('button');
-      if (!currentTarget) {
-        return;
-      }
-      log(false, 'a button was clicked', { e, currentTarget });
-      if (currentTarget.classList.contains('add-row')) {
-        this.handleNewRowClick(currentTarget);
-      }
-      if (currentTarget.classList.contains('delete-row')) {
-        this.handleDeleteRowClick(currentTarget);
-      }
-    });
+    this.listenerAbort?.abort();
+    this.listenerAbort = new AbortController();
+    this.element.addEventListener(
+      'click',
+      (e) => {
+        if (e == null || !(e.target instanceof HTMLElement)) {
+          return;
+        }
+        const currentTarget = e.target.closest('button');
+        if (!currentTarget) {
+          return;
+        }
+        log(false, 'a button was clicked', { e, currentTarget });
+        if (currentTarget.classList.contains('add-row')) {
+          this.handleNewRowClick(currentTarget);
+        }
+        if (currentTarget.classList.contains('delete-row')) {
+          this.handleDeleteRowClick(currentTarget);
+        }
+      },
+      { signal: this.listenerAbort.signal }
+    );
   }
 
   async _onRender() {

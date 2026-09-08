@@ -82,6 +82,8 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
 
   draggedTab: HTMLElement | undefined;
 
+  listenerAbort?: AbortController;
+
   constructor(options = {}) {
     super(options);
     this.expanded = false;
@@ -838,18 +840,26 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   }
 
   addListeners() {
+    this.listenerAbort?.abort();
+    this.listenerAbort = new AbortController();
+    const { signal } = this.listenerAbort;
+
     this.element.querySelectorAll('.gm-screen-actions button, .gm-screen-grid-cell-header a').forEach((btn) => {
-      btn.addEventListener('click', this.handleClickEvent.bind(this));
+      btn.addEventListener('click', (event) => this.handleClickEvent(event as MouseEvent), { signal });
     });
 
-    this.element.querySelector('.gm-screen-button')?.addEventListener('contextmenu', async () => {
-      if (!getGame().user?.isGM) {
-        return;
-      }
+    this.element.querySelector('.gm-screen-button')?.addEventListener(
+      'contextmenu',
+      async () => {
+        if (!getGame().user?.isGM) {
+          return;
+        }
 
-      const config = new GmScreenSettings({});
-      await config.render({ force: true });
-    });
+        const config = new GmScreenSettings({});
+        await config.render({ force: true });
+      },
+      { signal }
+    );
   }
 
   /**
