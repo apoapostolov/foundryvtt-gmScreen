@@ -24,6 +24,7 @@ declare global {
     'gm-screen.plain-journal-cells': boolean;
     'gm-screen.constrain-cell-content': boolean;
     'gm-screen.hidden-journal-sidebar': boolean;
+    'gm-screen.remap-journal-pages-index-from-1': boolean;
     'gm-screen.reset': boolean;
     'gm-screen.right-margin': number;
     'gm-screen.rows': number;

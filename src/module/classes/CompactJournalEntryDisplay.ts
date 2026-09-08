@@ -56,6 +56,7 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
         }
       } else {
         this._syncHiddenSidebar(gridCellContent);
+        this._remapPageIndexes(this.form);
       }
     }
 
@@ -65,6 +66,24 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
         this.toggleSidebar();
       }
     }
+  }
+
+  _remapPageIndexes(root: HTMLElement) {
+    if (!getGame().settings.get(MODULE_ID, MySettings.remapJournalPagesIndexFrom1)) {
+      return;
+    }
+    root.querySelectorAll('.page-index').forEach((node) => {
+      const el = node as HTMLElement;
+      if (el.dataset.gmScreenIndexRemapped === '1') {
+        return;
+      }
+      const n = Number.parseInt(el.textContent ?? '', 10);
+      if (!Number.isFinite(n)) {
+        return;
+      }
+      el.textContent = String(n + 1);
+      el.dataset.gmScreenIndexRemapped = '1';
+    });
   }
 
   _syncHiddenSidebar(gridCellContent: Element) {
