@@ -472,11 +472,22 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
             problemCoordinates,
           });
 
-          // get any overlapped cells and remove them
-          Object.values(newEntries).forEach((entry) => {
-            if (problemCoordinates.includes(entry.entryId) && entry.entryId !== newCell.entryId) {
-              delete newEntries[entry.entryId];
+          const overlappingEntries = Object.values(newEntries).filter(
+            (entry) => problemCoordinates.includes(entry.entryId) && entry.entryId !== newCell.entryId
+          );
+          if (overlappingEntries.length) {
+            const proceed = await foundry.applications.api.DialogV2.confirm({
+              title: getLocalization().localize(`${MODULE_ABBREV}.warnings.overlapConfirm.Title`),
+              content: getLocalization().localize(`${MODULE_ABBREV}.warnings.overlapConfirm.Content`),
+            });
+            if (!proceed) {
+              return;
             }
+          }
+
+          // get any overlapped cells and remove them
+          overlappingEntries.forEach((entry) => {
+            delete newEntries[entry.entryId];
           });
 
           log(false, 'newEntries', newEntries);
