@@ -468,31 +468,27 @@ $transition-timing: 400ms;
     position: relative;
   }
 
-  .gm-screen-journal-sidebar-rail {
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: var(--sidebar-width-collapsed, 40px);
-    z-index: 1000;
-  }
-
   .journal-sidebar {
     position: absolute;
     inset: 0 auto 0 0;
-    z-index: 6;
+    z-index: 20;
     height: 100%;
-    width: var(--sidebar-width-collapsed, 40px);
+    width: var(--sidebar-width-expanded, 300px);
+    flex: 0 0 var(--sidebar-width-expanded, 300px);
     transform: translateX(-100%);
     transition: transform $transition-timing ease;
     transition-delay: $transition-timing;
     pointer-events: none;
+    overflow: hidden;
     background: var(--color-cool-5);
   }
 
-  .journal-entry.expanded .journal-sidebar {
-    width: var(--sidebar-width-expanded, 300px);
+  .journal-entry:not(.expanded) .journal-sidebar {
+    width: var(--sidebar-width-collapsed, 40px);
+    flex-basis: var(--sidebar-width-collapsed, 40px);
   }
 
-  .gm-screen-grid-cell-content:has(.gm-screen-journal-sidebar-rail:hover) .journal-sidebar,
+  .gm-screen-grid-cell-content.gm-screen-journal-sidebar-open .journal-sidebar,
   .gm-screen-grid-cell-content:has(.journal-sidebar:hover) .journal-sidebar,
   .gm-screen-grid-cell-content:has(.journal-sidebar:focus-within) .journal-sidebar {
     transform: translateX(0);
