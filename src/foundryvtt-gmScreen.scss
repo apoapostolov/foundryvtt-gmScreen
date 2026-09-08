@@ -394,4 +394,33 @@ $transition-timing: 400ms;
   }
 }
 
+
+.gm-screen-app.plain-journal-cells {
+  .gm-screen-grid-cell-content {
+    .journal-sheet,
+    .journal-entry,
+    .journal-entry-content,
+    .journal-entry-page,
+    .journal-page-content,
+    .window-content {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    .journal-sidebar,
+    .directory,
+    nav.pages-list {
+      display: none;
+    }
+
+    img,
+    table,
+    pre {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}
+
 @include meta.load-css('styles/package-overrides.scss');
