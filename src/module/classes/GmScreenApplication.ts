@@ -278,16 +278,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       newGridData,
     });
 
-    await this.setGridDataWithPendingCellRefresh(
-      newGridData,
-      cellId
-        ? {
-            gridId: newGridData.id,
-            entryId: newEntry.entryId,
-            cellId,
-          }
-        : undefined
-    );
+    await this.setGridData(newGridData);
   }
 
   /**
@@ -324,22 +315,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       entries: newEntries,
     };
 
-    await this.setGridDataWithPendingCellRefresh(
-      newGridData,
-      gridCellId
-        ? {
-            gridId: newGridData.id,
-            entryId,
-            cellId: gridCellId,
-            entry: shouldKeepCellLayout
-              ? clearedCell
-              : {
-                  x: clearedCell.x,
-                  y: clearedCell.y,
-                },
-          }
-        : undefined
-    );
+    await this.setGridData(newGridData);
   }
 
   bringToFront() {
@@ -697,7 +673,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
               imagePath: path,
             };
 
-            await this.addEntryToActiveGrid(newEntry, gridCell.id);
+            await this.addEntryToActiveGrid(newEntry);
           },
         });
         fp.render({ force: true });
@@ -1642,6 +1618,6 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       isDndNpcStatBlock: false,
     };
 
-    await this.addEntryToActiveGrid(newEntry, gridCell.id);
+    await this.addEntryToActiveGrid(newEntry);
   }
 }
