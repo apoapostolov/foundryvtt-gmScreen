@@ -399,14 +399,19 @@ $transition-timing: 400ms;
   .gm-screen-grid-cell,
   .gm-screen-grid-cell-content-wrapper {
     min-width: 0;
+    min-height: 0;
     max-width: 100%;
     overflow: hidden;
   }
 
-  .gm-screen-grid-cell-content {
+  .gm-screen-grid-cell-content,
+  .gm-screen-grid-cell-content .application,
+  .gm-screen-grid-cell-content .journal-sheet,
+  .gm-screen-grid-cell-content .journal-entry-content,
+  .gm-screen-grid-cell-content .window-content {
     min-width: 0 !important;
     max-width: 100% !important;
-    overflow-x: hidden;
+    width: 100%;
   }
 
   .gm-screen-grid-cell-content img,

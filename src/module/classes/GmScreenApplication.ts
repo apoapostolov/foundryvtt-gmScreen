@@ -778,6 +778,11 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   }
 
   async _onRender() {
+    this.element.classList.toggle(
+      'constrain-cell-content',
+      !!getGame().settings.get(MODULE_ID, MySettings.constrainCellContent),
+    );
+
     const dragDrop = new foundry.applications.ux.DragDrop({
       dragSelector: '.gm-screen-grid-cell',
       dropSelector: '.gm-screen-grid-cell',
