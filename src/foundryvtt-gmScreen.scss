@@ -394,4 +394,42 @@ $transition-timing: 400ms;
   }
 }
 
+.gm-screen-app.hidden-journal-sidebar {
+  .gm-screen-grid-cell-content:has(.journal-sidebar) {
+    position: relative;
+  }
+
+  .gm-screen-journal-sidebar-rail {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-width-collapsed, 40px);
+    z-index: 1000;
+  }
+
+  .journal-sidebar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 6;
+    height: 100%;
+    width: var(--sidebar-width-collapsed, 40px);
+    transform: translateX(-100%);
+    transition: transform $transition-timing ease;
+    transition-delay: $transition-timing;
+    pointer-events: none;
+    background: var(--color-cool-5);
+  }
+
+  .journal-entry.expanded .journal-sidebar {
+    width: var(--sidebar-width-expanded, 300px);
+  }
+
+  .gm-screen-grid-cell-content:has(.gm-screen-journal-sidebar-rail:hover) .journal-sidebar,
+  .gm-screen-grid-cell-content:has(.journal-sidebar:hover) .journal-sidebar,
+  .gm-screen-grid-cell-content:has(.journal-sidebar:focus-within) .journal-sidebar {
+    transform: translateX(0);
+    transition-delay: 0s;
+    pointer-events: auto;
+  }
+}
+
 @include meta.load-css('styles/package-overrides.scss');

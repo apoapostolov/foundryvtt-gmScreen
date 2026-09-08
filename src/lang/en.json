@@ -49,6 +49,10 @@
         "Name": "Condensed GM Screen Button",
         "Hint": "Removes text from the button"
       },
+      "hidden-journal-sidebar": {
+        "Name": "Hidden Journal Sidebar",
+        "Hint": "Hide the table of contents on whole journals in cells until you hover the left edge."
+      },
       "reset": {
         "Name": "Reset",
         "Hint": "Clear the Grid entries. This action can not be undone."

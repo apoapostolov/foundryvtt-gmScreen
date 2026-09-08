@@ -24,6 +24,7 @@ export enum MySettings {
   gmScreenConfig = 'gm-screen-config',
   migrated = 'migrated',
   condensedButton = 'condensedButton',
+  hiddenJournalSidebar = 'hidden-journal-sidebar',
   reset = 'reset',
   rightMargin = 'right-margin',
   rows = 'rows',
