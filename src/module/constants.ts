@@ -26,6 +26,7 @@ export enum MySettings {
   condensedButton = 'condensedButton',
   constrainCellContent = 'constrain-cell-content',
   hiddenJournalSidebar = 'hidden-journal-sidebar',
+  remapJournalPagesIndexFrom1 = 'remap-journal-pages-index-from-1',
   reset = 'reset',
   rightMargin = 'right-margin',
   rows = 'rows',
