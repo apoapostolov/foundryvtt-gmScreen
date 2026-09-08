@@ -128,6 +128,18 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       hint: `${MODULE_ABBREV}.settings.${MySettings.condensedButton}.Hint`,
     });
 
+    getGame().settings.register(MODULE_ID, MySettings.remapJournalPagesIndexFrom1, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.remapJournalPagesIndexFrom1}.Name`,
+      default: true,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.remapJournalPagesIndexFrom1}.Hint`,
+      onChange: () => {
+        getGame().modules.get(MODULE_ID)?.api?.refreshGmScreen();
+      },
+    });
+
     getGame().settings.register(MODULE_ID, MySettings.reset, {
       name: `${MODULE_ABBREV}.settings.${MySettings.reset}.Name`,
       default: false,

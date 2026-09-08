@@ -49,6 +49,10 @@
         "Name": "Condensed GM Screen Button",
         "Hint": "Removes text from the button"
       },
+      "remap-journal-pages-index-from-1": {
+        "Name": "Remap Journal Pages Index from 1",
+        "Hint": "Number journal pages in GM Screen cells starting at 1."
+      },
       "reset": {
         "Name": "Reset",
         "Hint": "Clear the Grid entries. This action can not be undone."

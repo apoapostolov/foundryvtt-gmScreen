@@ -1,3 +1,6 @@
+import { getGame } from '../helpers';
+import { MODULE_ID, MySettings } from '../constants';
+
 export class CompactJournalEntryDisplay extends foundry.applications.sheets.journal.JournalEntrySheet {
   cellId: string;
 
@@ -37,13 +40,33 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
       }
       gridCellContent.classList.remove(...gridCellContent.classList);
       gridCellContent.classList.add('gm-screen-grid-cell-content');
+      this._remapPageIndexes(this.form);
     }
 
     if (!this._initialRenderDone) {
       this._initialRenderDone = true;
       // incomplete type definitions
+      // @ts-expect-error
       this.toggleSidebar();
     }
+  }
+
+  _remapPageIndexes(root: HTMLElement) {
+    if (!getGame().settings.get(MODULE_ID, MySettings.remapJournalPagesIndexFrom1)) {
+      return;
+    }
+    root.querySelectorAll('.page-index').forEach((node) => {
+      const el = node as HTMLElement;
+      if (el.dataset.gmScreenIndexRemapped === '1') {
+        return;
+      }
+      const n = Number.parseInt(el.textContent ?? '', 10);
+      if (!Number.isFinite(n)) {
+        return;
+      }
+      el.textContent = String(n + 1);
+      el.dataset.gmScreenIndexRemapped = '1';
+    });
   }
 
   /** @override */
