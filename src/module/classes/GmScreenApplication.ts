@@ -1,5 +1,6 @@
 import {
   emptyClose,
+  extractCoreJournalView,
   getGame,
   getGridElementsPosition,
   getLocalization,
@@ -783,6 +784,11 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   }
 
   async _onRender() {
+    this.element.classList.toggle(
+      'plain-journal-cells',
+      !!getGame().settings.get(MODULE_ID, MySettings.plainJournalCells),
+    );
+
     const dragDrop = new foundry.applications.ux.DragDrop({
       dragSelector: '.gm-screen-grid-cell',
       dropSelector: '.gm-screen-grid-cell',
@@ -1033,6 +1039,14 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
           gridCellContent.children[0].replaceChildren(wrapper);
 
           gridCellContent.querySelector('.window-header')?.remove();
+
+          if (getGame().settings.get(MODULE_ID, MySettings.plainJournalCells)) {
+            const coreView = extractCoreJournalView(this.form);
+            this.form.style.display = 'none';
+            if (coreView) {
+              gridCellContent.append(coreView);
+            }
+          }
         };
 
         TextDocumentSheet.close = emptyClose;

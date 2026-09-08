@@ -235,6 +235,29 @@ export function emptyClose() {
   return Promise.resolve(this);
 }
 
+/** Move Foundry's journal page view out of Application sheet chrome. */
+export function extractCoreJournalView(from: HTMLElement): HTMLElement | null {
+  const pages = from.querySelector<HTMLElement>('.journal-entry-pages');
+  if (pages) {
+    const wrap = document.createElement('section');
+    wrap.className = 'journal-entry-content flexcol';
+    wrap.append(pages);
+    return wrap;
+  }
+
+  const page =
+    from.querySelector<HTMLElement>('.journal-entry-page') ??
+    from.querySelector<HTMLElement>('.journal-page-content');
+  if (!page) {
+    return null;
+  }
+
+  const wrap = document.createElement('section');
+  wrap.className = 'journal-entry-content flexcol';
+  wrap.append(page);
+  return wrap;
+}
+
 export function isActorOrItemResizable(documentName: string) {
   return RESIZABLE_DOCUMENTS.includes(documentName);
 }
