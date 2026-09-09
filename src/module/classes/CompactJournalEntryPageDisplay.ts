@@ -1,5 +1,5 @@
-import { MODULE_ID, MySettings } from '../constants';
 import { getGame } from '../helpers';
+import { MODULE_ID, MySettings } from '../constants';
 
 export class CompactJournalEntryPageDisplay
   extends foundry.applications.sheets.journal.JournalEntryPageHandlebarsSheet
@@ -71,8 +71,8 @@ export class CompactJournalEntryPageDisplay
         break;
       }
       default: {
-        const html = this.options.document.text.content;
-        if (!html) {
+        const pageHtml = this.options.document.text.content;
+        if (!pageHtml) {
           break;
         }
         const plain = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
@@ -81,11 +81,11 @@ export class CompactJournalEntryPageDisplay
           page.className = 'journal-entry-page text';
           const content = document.createElement('section');
           content.className = 'journal-page-content';
-          content.innerHTML = html;
+          content.innerHTML = pageHtml;
           page.append(content);
           gridCellContent.replaceChildren(page);
         } else {
-          gridCellContent.innerHTML = html;
+          gridCellContent.innerHTML = pageHtml;
         }
         break;
       }

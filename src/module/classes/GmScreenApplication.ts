@@ -528,7 +528,15 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
           // If the relevantEntitySheet is already rendered:
           if (relevantDocumentSheet.rendered) {
             relevantDocumentSheet.maximize();
-            relevantDocumentSheet.bringToTop();
+            const sheet = relevantDocumentSheet as typeof relevantDocumentSheet & {
+              bringToFront?: () => void;
+              bringToTop?: () => void;
+            };
+            if (typeof sheet.bringToFront === 'function') {
+              sheet.bringToFront();
+            } else {
+              sheet.bringToTop?.();
+            }
             return;
           }
           if (
