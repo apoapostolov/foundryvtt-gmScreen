@@ -48,3 +48,12 @@ Apo after live-sync:
 
 Measured OSA v14.367: handle 28px, border `#000`, flush. Constrain: form 677px in 681px cell, min-width 0. Plain: form `display:none`, visible `.journal-entry-content` without sidebar.
 
+## 2026-09-09 journal page memory, jump, scene tabs
+
+- `apo/live-all` `f39408b` feat: remember journal page and scroll, add page jump.
+  Pushed origin/apo/live-all.
+- Upstream PR (no `dev` branch; same base as the others): https://github.com/samulopez/foundryvtt-gmScreen/pull/187 from `feat/journal-cell-memory`.
+- Scene-bound tabs live on `apo/live-all` uncommitted: Grid Tab Configuration Scenes column, portaled `gms-multi` with folder headers, `sceneIds` on the grid, `canvasReady` switches the first matching tab. Manual tab click wins until the scene changes.
+- OSA proof: Keep -> default, Caves Overland -> qa tab, Keep -> default. Picker list parent BODY, 31 scenes, folder headers, no viewport spill. QA tab restored out of the world config.
+
+

@@ -15,6 +15,27 @@
     <input type="number" name="grids.{{gridId}}.rowOverride" placeholder="{{defaultRows}}" value="{{grid.rowOverride}}"
       data-dtype="Number">
   </td>
+  <td class="gms-scene-cell">
+    <details class="gms-multi" data-grid-id="{{gridId}}">
+      <summary>{{grid.sceneSummary}}</summary>
+      <div class="gms-multi-list">
+        <input type="search" class="gms-multi-filter" aria-label="{{localize 'GMSCR.gridConfig.scenePicker.Filter'}}">
+        {{#each grid.sceneGroups as |group|}}
+        <div class="gms-multi-group">
+          {{#if group.folderName}}
+          <div class="gms-multi-folder">{{group.folderName}}</div>
+          {{/if}}
+          {{#each group.scenes as |scene|}}
+          <label>
+            <input type="checkbox" name="grids.{{../../gridId}}.sceneIds" value="{{scene.id}}" {{#if scene.checked}}checked{{/if}}>
+            <span>{{scene.name}}</span>
+          </label>
+          {{/each}}
+        </div>
+        {{/each}}
+      </div>
+    </details>
+  </td>
   <td class="textCenter">
     <input type="checkbox" name="grids.{{gridId}}.isShared" {{#if grid.isShared}}checked{{/if}}>
   </td>
