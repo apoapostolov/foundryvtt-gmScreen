@@ -106,8 +106,14 @@
         "Columns": "Columns Override",
         "Rows": "Rows Override",
         "Shared": "Shared",
+        "Scenes": "Show on Scenes Only",
         "TabLabel": "Tab Label",
         "TabOrder": "Order"
+      },
+      "scenePicker": {
+        "None": "None",
+        "Count": "{count} scenes",
+        "Filter": "Filter scenes"
       },
       "errors": {
         "empty": "Cannot save the grid with no tabs."
