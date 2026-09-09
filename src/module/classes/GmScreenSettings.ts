@@ -430,14 +430,6 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
     this.addEventListeners();
   }
 
-  // grids: {
-  //   default: {
-  //     name: 'Main',
-  //     id: 'default',
-  //     entries: {},
-  //   },
-  // },
-
   static async #onSubmit(event, form, formData) {
     const gmScreenConfig = getGame().settings.get(MODULE_ID, MySettings.gmScreenConfig);
 

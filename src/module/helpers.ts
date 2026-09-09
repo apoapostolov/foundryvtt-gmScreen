@@ -126,7 +126,7 @@ export function getGridElementsPosition(element: HTMLElement) {
     element,
     relevantGridElement,
     vanillaGridElementStyles,
-    gap: vanillaGridElementStyles.gap, // wtf this is '' in firefox
+    gap: vanillaGridElementStyles.gap, // Firefox reports gap as ''
     gridRowGap: vanillaGridElementStyles['grid-row-gap'],
     gridColGap: vanillaGridElementStyles['grid-column-gap'],
   });
@@ -262,8 +262,7 @@ export function extractCoreJournalView(from: HTMLElement): HTMLElement | null {
   }
 
   const page =
-    from.querySelector<HTMLElement>('.journal-entry-page') ??
-    from.querySelector<HTMLElement>('.journal-page-content');
+    from.querySelector<HTMLElement>('.journal-entry-page') ?? from.querySelector<HTMLElement>('.journal-page-content');
   if (!page) {
     return null;
   }
