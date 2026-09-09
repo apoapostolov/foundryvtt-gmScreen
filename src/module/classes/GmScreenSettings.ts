@@ -181,6 +181,31 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       },
     });
 
+    getGame().settings.register(MODULE_ID, MySettings.rememberJournalPage, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.rememberJournalPage}.Name`,
+      default: true,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.rememberJournalPage}.Hint`,
+    });
+
+    getGame().settings.register(MODULE_ID, MySettings.rememberJournalScroll, {
+      name: `${MODULE_ABBREV}.settings.${MySettings.rememberJournalScroll}.Name`,
+      default: false,
+      type: Boolean,
+      scope: 'client',
+      config: true,
+      hint: `${MODULE_ABBREV}.settings.${MySettings.rememberJournalScroll}.Hint`,
+    });
+
+    getGame().settings.register(MODULE_ID, MySettings.journalCellViews, {
+      default: {},
+      type: Object,
+      scope: 'client',
+      config: false,
+    });
+
     getGame().settings.register(MODULE_ID, MySettings.reset, {
       name: `${MODULE_ABBREV}.settings.${MySettings.reset}.Name`,
       default: false,
