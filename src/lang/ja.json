@@ -1,6 +1,5 @@
 {
   "GMSCR": {
-    "Grid": "グリッド",
     "gmScreen": {
       "Title": "GMスクリーン",
       "ClearCell": "セルの削除",
@@ -84,10 +83,6 @@
       "errors": {
         "empty": "タブなしでスクリーンの設定を保存することはできません。"
       }
-    },
-    "entitySheet": {
-      "Label": "GMスクリーン シート設定",
-      "Hint": "GMスクリーンで使用するシートを設定します。"
     },
     "keybindings": {
       "openCloseScreen": "GMスクリーンを開閉",

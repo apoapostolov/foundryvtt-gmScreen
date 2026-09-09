@@ -1,10 +1,5 @@
 {
   "GMSCR": {
-    "I18N": {
-      "LANGUAGE": "Español",
-      "MAINTAINERS": "Git-GoR, @Viriato139ac#0342"
-    },
-    "Grid": "Rejilla",
     "gmScreen": {
       "Title": "Pantalla del GM",
       "ClearCell": "Limpiar celda",
@@ -88,10 +83,6 @@
       "errors": {
         "empty": "No se puede guardar una rejilla sin pestañas"
       }
-    },
-    "entitySheet": {
-      "Label": "Hoja de pantalla de GM",
-      "Hint": "Configura para este objeto la hoja usada específicamente en GM Screen"
     },
     "keybindings": {
       "openCloseScreen": "Abre/Cierra la pantalla del GM",

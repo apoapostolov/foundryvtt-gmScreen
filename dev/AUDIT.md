@@ -1,9 +1,34 @@
-# GM Screen audit (2026-09-08)
+# GM Screen audit
+
+## Cleanup 2026-09-09 (`apo/live-all`, 14.0.0)
+
+Runtime TypeScript is already tight. Every export, template, and CSS class
+is used. Listener stacking and `emptyClose` thenable are already fixed.
+
+Removed unused content:
+- lang keys `GMSCR.Grid` and `GMSCR.entitySheet` (all locales)
+- Spanish translator metadata `GMSCR.I18N`
+- unused Sass `asset()` helper
+- empty `src/assets`, `src/fonts`, and redundant `.gitkeep` files
+- commented default-grid fragment in `GmScreenSettings`
+
+Kept on purpose:
+- `TEMPLATES.screenCell` / `screenGrid` (Handlebars preload via flatten)
+- `_onRender` class toggles (ApplicationV2 may not rebuild the frame)
+- dnd5e / OneJournal CSS overrides
+- DeltaGreen `RESIZABLE_DOCUMENTS`
+
+Other locales still lack the four local settings and overlap-confirm keys.
+Foundry falls back to `en.json`.
+
+---
+
+## Snapshot 2026-09-08
 
 Checkout: `C:/git-foundry/GM-Screen-for-Foundry-VTT`
-Commit: `ec0462a` (`chore: update deps`)
-Upstream tag latest: **v6.2.1** (2026-06-28)
-Source `src/module.json` version: **5.5.3** (release workflow substitutes the tag)
+Commit at that time: `ec0462a` (`chore: update deps`)
+Upstream tag then: **v6.2.1** (2026-06-28)
+Source version then: **5.5.3** (release workflow substitutes the tag)
 
 License: MIT. Fork of ElfFriend-DnD. samulopez is the live maintainer.
 

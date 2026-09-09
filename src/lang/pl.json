@@ -1,6 +1,5 @@
 {
   "GMSCR": {
-    "Grid": "Siatka",
     "gmScreen": {
       "Title": "Ekran MG",
       "ClearCell": "Wyczyść komórkę",
@@ -84,10 +83,6 @@
       "errors": {
         "empty": "Nie można zapisać siatki bez zakładek."
       }
-    },
-    "entitySheet": {
-      "Label": "Karta ekranu MG",
-      "Hint": "Ustaw kartę używaną specjalnie na ekranie MG dla tego elementu."
     },
     "keybindings": {
       "openCloseScreen": "Otwórz/Zamknij ekran MG",

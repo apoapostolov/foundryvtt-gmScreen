@@ -1,6 +1,5 @@
 {
   "GMSCR": {
-    "Grid": "Grid",
     "gmScreen": {
       "Title": "GM Screen",
       "ClearCell": "Clear Cell",
@@ -104,10 +103,6 @@
       "errors": {
         "empty": "Cannot save the grid with no tabs."
       }
-    },
-    "entitySheet": {
-      "Label": "GM Screen Sheet",
-      "Hint": "Set the sheet used specifically on GM Screen for this item."
     },
     "keybindings": {
       "openCloseScreen": "Open/Close GM Screen",

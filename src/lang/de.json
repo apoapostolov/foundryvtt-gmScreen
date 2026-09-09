@@ -1,6 +1,5 @@
 {
   "GMSCR": {
-    "Grid": "Raster",
     "gmScreen": {
       "Title": "SL Schirm",
       "ClearCell": "Zelle leeren",
@@ -84,10 +83,6 @@
       "errors": {
         "empty": "Speichern des Rasters ohne Reiter nicht möglich."
       }
-    },
-    "entitySheet": {
-      "Label": "SL Schirm Bogen",
-      "Hint": "Setze den Bogen, der speziell im SL Schirm für diesen Gegenstand verwendet werden soll."
     },
     "keybindings": {
       "openCloseScreen": "Öffne/Schließe den SL Schirm",
