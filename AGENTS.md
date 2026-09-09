@@ -9,7 +9,7 @@ not a rewrite with a new module id.
 - Original (stale): `https://github.com/ElfFriend-DnD/foundryvtt-gmScreen` (`original`).
 - Fork: `https://github.com/apoapostolov/foundryvtt-gmScreen` (`origin`).
 - Runtime id stays `gm-screen` while contributing upstream.
-- Target Foundry v13 minimum, verified v14, maximum v14 (see `src/module.json`).
+- Target Foundry v14 minimum, verified v14, maximum v14 (see `src/module.json`). Local package version is 14.0.0 so the Foundry directory cannot replace this checkout with samulopez 6.x.
 - Source lives in `src/`. Build with `npm run build`. Output is `dist/gm-screen/`.
 - Do not ship `AGENTS.md` or `dev/` in a PR to samulopez. Cut PR branches
   from `upstream/main`, never from `apo/develop`.
