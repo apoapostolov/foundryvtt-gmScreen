@@ -78,8 +78,14 @@
         "Columns": "列数",
         "Rows": "行数",
         "Shared": "共有",
+        "Scenes": "指定シーンでのみ表示",
         "TabLabel": "タブの名称",
         "TabOrder": "並び順"
+      },
+      "scenePicker": {
+        "None": "なし",
+        "Count": "{count} シーン",
+        "Filter": "シーンを絞り込み"
       },
       "errors": {
         "empty": "タブなしでスクリーンの設定を保存することはできません。"

@@ -1,5 +1,144 @@
 .gm-screen-config {
+  max-width: none;
+
   .hidden {
+    display: none;
+  }
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead,
+  thead tr,
+  thead th {
+    background: none;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  th,
+  td {
+    padding: 0.35rem 0.4rem;
+    vertical-align: middle;
+  }
+
+  th {
+    white-space: normal;
+    line-height: 1.15;
+    font-weight: 700;
+  }
+
+  .gms-col-order,
+  .gms-col-delete {
+    width: 2.5rem;
+  }
+
+  .gms-col-num {
+    width: 4.75rem;
+  }
+
+  .gms-col-label {
+    width: 12rem;
+  }
+
+  .gms-col-scenes {
+    width: 14.4rem;
+  }
+
+  .gms-col-shared {
+    width: 3.75rem;
+  }
+
+  th:nth-child(1),
+  td:nth-child(1),
+  th:nth-child(3),
+  td:nth-child(3),
+  th:nth-child(4),
+  td:nth-child(4),
+  th:nth-child(6),
+  td:nth-child(6),
+  th:nth-child(7),
+  td:nth-child(7) {
+    text-align: center;
+  }
+
+  input[type='text'],
+  input[type='number'] {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 0 0.5rem;
+  }
+
+  input[type='number'] {
+    padding: 0 0.25rem;
+    text-align: center;
+    appearance: textfield;
+  }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  td:nth-child(6) input[type='checkbox'] {
+    display: inline-block;
+    margin: 0 auto;
+    vertical-align: middle;
+  }
+
+  .gms-scene-cell {
+    min-width: 0;
+  }
+
+  .gms-config-footer {
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .gms-multi {
+    position: relative;
+    margin: 0;
+  }
+
+  .gms-multi > summary {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    min-height: var(--input-height, 2.25rem);
+    padding: 0 0.5rem;
+    border: 1px solid var(--input-border-color, var(--color-fieldset-border, transparent));
+    border-radius: 4px;
+    background: var(--input-background-color, var(--color-cool-5));
+    color: inherit;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .gms-multi > summary::after {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding-left: 0.35rem;
+    border: 0.28rem solid transparent;
+    border-top-color: currentColor;
+    transform: translateY(0.12rem);
+    opacity: 0.7;
+    content: '';
+  }
+
+  .gms-multi[open] > summary {
+    border-color: var(--color-border-highlight, var(--color-border-light-primary));
+  }
+
+  .gms-multi > summary::-webkit-details-marker {
     display: none;
   }
 
@@ -7,22 +146,80 @@
     cursor: grab;
   }
 
-  .gm-screen-icon-button {
-    align-self: center;
-    background: transparent;
-    border: 0;
+  button.gm-screen-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 auto;
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
     color: inherit;
-    line-height: normal;
-    padding: 0;
+    line-height: 1;
+    flex: 0 0 auto;
 
     & > i {
-      margin-right: 0;
+      margin: 0;
     }
 
     &:hover,
     &:focus {
-      box-shadow: none;
+      background: none !important;
+      background-color: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
       text-shadow: 0 0 5px red;
     }
   }
+}
+
+.gms-multi-list {
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 0.25rem 0;
+  border: 1px solid var(--color-border-light-primary, color-mix(in srgb, currentColor 40%, transparent));
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 45%);
+}
+
+.gms-multi-filter {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+  border-radius: 0;
+  box-shadow: none;
+  background: inherit;
+}
+
+.gms-multi-folder {
+  padding: 0.25rem 0.5rem 0.1rem;
+  font-weight: 700;
+  opacity: 0.72;
+}
+
+.gms-multi-list label {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+}
+
+.gms-multi-list input[type='checkbox'] {
+  flex: 0 0 auto;
+  accent-color: var(--color-warm-1);
+}
+
+.gms-multi-list input[type='checkbox']:not(:checked) {
+  accent-color: var(--color-dark-6);
 }

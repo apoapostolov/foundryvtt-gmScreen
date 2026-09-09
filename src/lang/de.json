@@ -78,8 +78,14 @@
         "Columns": "Spalten Überschreiben",
         "Rows": "Zeilen Überschreiben",
         "Shared": "Geteilt",
+        "Scenes": "Nur auf Szenen anzeigen",
         "TabLabel": "Reiter Bezeichnung",
         "TabOrder": "Tab Reihenfolge"
+      },
+      "scenePicker": {
+        "None": "Keine",
+        "Count": "{count} Szenen",
+        "Filter": "Szenen filtern"
       },
       "errors": {
         "empty": "Speichern des Rasters ohne Reiter nicht möglich."

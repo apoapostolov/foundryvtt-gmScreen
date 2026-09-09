@@ -78,8 +78,14 @@
         "Columns": "Nadpisanie kolumn",
         "Rows": "Nadpisanie wierszy",
         "Shared": "Udostępnione",
+        "Scenes": "Tylko na scenach",
         "TabLabel": "Etykieta zakładki",
         "TabOrder": "Kolejność"
+      },
+      "scenePicker": {
+        "None": "Brak",
+        "Count": "{count} scen",
+        "Filter": "Filtruj sceny"
       },
       "errors": {
         "empty": "Nie można zapisać siatki bez zakładek."

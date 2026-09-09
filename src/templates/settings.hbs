@@ -3,14 +3,24 @@
   <h2>{{localize 'GMSCR.gridConfig.GridTabs'}}</h2>
 
   <table>
+    <colgroup>
+      <col class="gms-col-order">
+      <col class="gms-col-label">
+      <col class="gms-col-num">
+      <col class="gms-col-num">
+      <col class="gms-col-scenes">
+      <col class="gms-col-shared">
+      <col class="gms-col-delete">
+    </colgroup>
     <thead>
       <tr>
         <th>{{localize 'GMSCR.gridConfig.table.TabOrder'}}</th>
         <th>{{localize 'GMSCR.gridConfig.table.TabLabel'}}</th>
         <th>{{localize 'GMSCR.gridConfig.table.Columns'}}</th>
         <th>{{localize 'GMSCR.gridConfig.table.Rows'}}</th>
+        <th>{{localize 'GMSCR.gridConfig.table.Scenes'}}</th>
         <th>{{localize 'GMSCR.gridConfig.table.Shared'}}</th>
-        <th>{{localize 'Delete'}}</th>
+        <th aria-label="{{localize 'Delete'}}"></th>
       </tr>
     </thead>
 
@@ -23,7 +33,7 @@
     </tbody>
   </table>
 
-  <div class="flexrow">
+  <div class="flexrow gms-config-footer">
     <button type="button" data-table="grids" class="add-row">
       <i class="fa fa-plus"></i> <span>{{localize 'GMSCR.gridConfig.table.Add'}}</span>
     </button>

@@ -80,6 +80,10 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   // used to allow players to switch tabs
   currentTab: string;
 
+  sceneManualUntilChange = false;
+
+  lastBoundSceneId?: string;
+
   draggedTab: HTMLElement | undefined;
 
   constructor(options = {}) {
@@ -561,6 +565,8 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       case ClickAction.tab: {
         const newActiveGridId = e.currentTarget.dataset.tab;
         this.currentTab = newActiveGridId ?? this.currentTab;
+        this.sceneManualUntilChange = true;
+        this.lastBoundSceneId = getGame().canvas?.scene?.id ?? undefined;
         // do nothing if we are not the GM or if nothing changes
         if (!getGame().user?.isGM || newActiveGridId === this.data.activeGridId || !newActiveGridId) {
           return;
@@ -636,6 +642,38 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       }
       default:
     }
+  }
+
+  async syncTabToScene() {
+    const sceneId = getGame().canvas?.scene?.id;
+    if (!sceneId) {
+      return;
+    }
+    if (this.sceneManualUntilChange && this.lastBoundSceneId === sceneId) {
+      return;
+    }
+    this.sceneManualUntilChange = false;
+    this.lastBoundSceneId = sceneId;
+    const match = Object.keys(this.userViewableGrids).find((gridId) =>
+      (this.userViewableGrids[gridId].sceneIds ?? []).includes(sceneId)
+    );
+    if (!match) {
+      return;
+    }
+    const isGM = getGame().user?.isGM;
+    const current = isGM ? this.data.activeGridId : this.currentTab;
+    if (match === current) {
+      return;
+    }
+    this.changeTab(match, TAB_GROUP_NAME);
+    this.currentTab = match;
+    if (!isGM) {
+      return;
+    }
+    await getGame().settings.set(MODULE_ID, MySettings.gmScreenConfig, {
+      ...this.data,
+      activeGridId: match,
+    });
   }
 
   async switchTab() {

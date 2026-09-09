@@ -58,6 +58,12 @@ async function switchTab() {
   }
 }
 
+async function syncTabToScene() {
+  if (gmScreenInstance) {
+    await gmScreenInstance.syncTabToScene();
+  }
+}
+
 /*
  * https://stackoverflow.com/questions/53398408/switch-case-with-default-in-handlebars-js
  * {{#switch 'a'}}
@@ -119,6 +125,12 @@ Hooks.once('ready', async () => {
   if (getGame().user?.isGM) {
     getGame().settings.set(MODULE_ID, MySettings.reset, false);
   }
+
+  await syncTabToScene();
+});
+
+Hooks.on('canvasReady', () => {
+  syncTabToScene().catch(() => undefined);
 });
 
 function addGmScreenButton(html: HTMLElement) {

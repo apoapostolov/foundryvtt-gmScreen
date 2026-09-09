@@ -1,3 +1,10 @@
+import {
+  bindScenePickers,
+  buildScenePickerGroups,
+  closeOpenScenePickers,
+  normalizeSceneIds,
+  scenePickerSummary,
+} from '../scenePicker';
 import { getGame, getLocalization, log } from '../helpers';
 import { MODULE_ABBREV, MODULE_ID, MyKeybindings, MySettings, TEMPLATES } from '../constants';
 import { GmScreenConfig } from '../../gridTypes';
@@ -19,6 +26,8 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
   foundry.applications.api.ApplicationV2
 ) {
   draggedRow: HTMLElement | undefined;
+
+  pickerAbort?: AbortController;
 
   static init() {
     getGame().settings.registerMenu(MODULE_ID, 'menu', {
@@ -182,9 +191,11 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
   static DEFAULT_OPTIONS = {
     id: 'gm-screen-tabs-config',
     classes: ['gm-screen-config'],
-    height: 'auto',
-    width: 600,
     tag: 'form',
+    position: {
+      width: 732,
+      height: 'auto' as const,
+    },
     form: {
       handler: GmScreenSettings.#onSubmit,
       submitOnClose: false,
@@ -212,8 +223,18 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
       gmScreenConfig,
     });
 
+    const grids = Object.fromEntries(
+      Object.entries(gmScreenConfig.grids).map(([gridId, grid]) => [
+        gridId,
+        {
+          ...grid,
+          sceneSummary: scenePickerSummary(grid.sceneIds),
+          sceneGroups: buildScenePickerGroups(grid.sceneIds ?? []),
+        },
+      ])
+    );
     return {
-      grids: gmScreenConfig.grids,
+      grids,
     };
   }
 
@@ -290,6 +311,8 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
         name: '',
         columnOverride: '',
         rowOverride: '',
+        sceneSummary: scenePickerSummary([]),
+        sceneGroups: buildScenePickerGroups([]),
       },
       defaultColumns: this.columns,
       defaultRows: this.rows,
@@ -349,6 +372,9 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
     });
     dragDropTabs.bind(this.element);
     this.addEventListeners();
+    this.pickerAbort?.abort();
+    this.pickerAbort = new AbortController();
+    bindScenePickers(this.element, this.pickerAbort);
   }
 
   // grids: {
@@ -360,6 +386,7 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
   // },
 
   static async #onSubmit(event, form, formData) {
+    closeOpenScenePickers(form);
     const gmScreenConfig = getGame().settings.get(MODULE_ID, MySettings.gmScreenConfig);
 
     const data = foundry.utils.expandObject(formData.object) as GmScreenConfig;
@@ -378,12 +405,14 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
 
     const newGrids = newGridIds.reduce<GmScreenConfig['grids']>((acc, gridId) => {
       const grid = data.grids[gridId];
+      const sceneIds = normalizeSceneIds(grid.sceneIds);
 
       // if this grid exists already, modify it
       if (Object.hasOwn(gmScreenConfig.grids, gridId)) {
         acc[gridId] = {
           ...gmScreenConfig.grids[gridId],
           ...grid,
+          sceneIds,
         };
 
         return acc;
@@ -395,6 +424,7 @@ export class GmScreenSettings extends foundry.applications.api.HandlebarsApplica
         entries: {},
         name: grid.name ?? '',
         isShared: grid.isShared ?? false,
+        sceneIds,
         id: gridId,
       };
 

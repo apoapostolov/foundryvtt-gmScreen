@@ -82,8 +82,14 @@
         "Columns": "Sobreescribir columnas",
         "Rows": "Sobreescribir filas",
         "Shared": "Compartido",
+        "Scenes": "Mostrar solo en escenas",
         "TabLabel": "Nombre de la pestaña",
         "TabOrder": "Orden"
+      },
+      "scenePicker": {
+        "None": "Ninguna",
+        "Count": "{count} escenas",
+        "Filter": "Filtrar escenas"
       },
       "errors": {
         "empty": "No se puede guardar una rejilla sin pestañas"
