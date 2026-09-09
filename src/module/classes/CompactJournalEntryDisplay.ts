@@ -59,8 +59,6 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
   }
 
   _setCurrentPage(options = {}) {
-    // incomplete JournalEntrySheet types
-    // @ts-expect-error
     super._setCurrentPage(options);
     this._persistMemory();
     this._syncPageJumpValue();
@@ -94,8 +92,6 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
 
     if (!this._initialRenderDone) {
       this._initialRenderDone = true;
-      // incomplete type definitions
-      // @ts-expect-error
       this.toggleSidebar();
     }
   }
