@@ -1,3 +1,4 @@
+import { clearJournalCellView, journalCellViewKey } from '../journalCellMemory';
 import {
   emptyClose,
   getGame,
@@ -247,6 +248,10 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     const newEntries = {
       ...this.activeGrid.entries,
     };
+
+    if (clearedCell?.entityUuid) {
+      clearJournalCellView(journalCellViewKey(entryId, clearedCell.entityUuid));
+    }
 
     if (shouldKeepCellLayout) {
       delete clearedCell.entityUuid;

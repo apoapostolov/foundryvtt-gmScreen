@@ -13,6 +13,39 @@ $transition-timing: 400ms;
 .gm-screen-app {
   position: relative;
 
+  .gm-screen-page-jump {
+    position: relative;
+    display: flex;
+    flex: 1 1 3rem;
+    align-items: center;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .gm-screen-page-jump-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .gm-screen-page-jump input[type='number'] {
+    width: 100%;
+    min-width: 2.75rem;
+    height: var(--input-height, 2rem);
+    margin: 0;
+    padding-inline: 0.25rem;
+    text-align: center;
+  }
+
+  .journal-sidebar > footer.action-buttons {
+    align-items: center;
+    gap: 0.25rem;
+  }
+
   --gm-screen-background: var(--color-cool-5-90);
   --gm-screen-button-text-color: var(--color-light-3);
   --gm-screen-button-border-color: var(--color-light-5);

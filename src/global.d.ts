@@ -21,6 +21,9 @@ declare global {
       version: string;
     };
     'gm-screen.condensedButton': boolean;
+    'gm-screen.remember-journal-page': boolean;
+    'gm-screen.remember-journal-scroll': boolean;
+    'gm-screen.journal-cell-views': Record<string, { pageId?: string; scrollTop?: number }>;
     'gm-screen.reset': boolean;
     'gm-screen.right-margin': number;
     'gm-screen.rows': number;
