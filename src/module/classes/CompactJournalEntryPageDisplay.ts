@@ -58,8 +58,8 @@ export class CompactJournalEntryPageDisplay
         gridCellContent.innerHTML = `<video src="${this.options.document.src}" ${this.options.document.video.controls ? 'controls' : ''} ${this.options.document.video.autoplay ? 'autoplay' : ''}></video>`;
         break;
       default: {
-        const html = this.options.document.text.content;
-        if (!html) {
+        const pageHtml = this.options.document.text.content;
+        if (!pageHtml) {
           break;
         }
         const plain = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
@@ -68,11 +68,11 @@ export class CompactJournalEntryPageDisplay
           page.className = 'journal-entry-page text';
           const content = document.createElement('section');
           content.className = 'journal-page-content';
-          content.innerHTML = html;
+          content.innerHTML = pageHtml;
           page.append(content);
           gridCellContent.replaceChildren(page);
         } else {
-          gridCellContent.innerHTML = html;
+          gridCellContent.innerHTML = pageHtml;
         }
         break;
       }
