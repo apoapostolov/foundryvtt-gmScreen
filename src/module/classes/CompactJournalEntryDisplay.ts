@@ -125,8 +125,7 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
     const hidden = !!getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar);
     const left = this.position?.left;
     const width = this.position?.width;
-    // incomplete type definitions
-    // @ts-expect-error
+    // type definitions now cover this
     super.toggleSidebar();
     if (!hidden) {
       return;
@@ -134,8 +133,7 @@ export class CompactJournalEntryDisplay extends foundry.applications.sheets.jour
     this.element.style.pointerEvents = '';
     this.element.style.minWidth = '';
     this.element.classList.remove('collapsing');
-    // incomplete type definitions
-    // @ts-expect-error
+    // type definitions now cover this
     this.element.classList.toggle('expanded', this.sidebarExpanded);
     if (Number.isFinite(left) && Number.isFinite(width)) {
       this.setPosition({ left, width });
