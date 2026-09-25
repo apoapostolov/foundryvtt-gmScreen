@@ -96,6 +96,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   draggedTab: HTMLElement | undefined;
 
   listenerAbort?: AbortController;
+  pendingCellRefresh: PendingCellRefresh | undefined;
 
   constructor(options = {}) {
     super(options);
@@ -283,7 +284,16 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       newGridData,
     });
 
-    await this.setGridData(newGridData);
+    await this.setGridDataWithPendingCellRefresh(
+      newGridData,
+      cellId
+        ? {
+            gridId: newGridData.id,
+            entryId: newEntry.entryId,
+            cellId,
+          }
+        : undefined
+    );
   }
 
   /**
@@ -320,7 +330,22 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       entries: newEntries,
     };
 
-    await this.setGridData(newGridData);
+    await this.setGridDataWithPendingCellRefresh(
+      newGridData,
+      gridCellId
+        ? {
+            gridId: newGridData.id,
+            entryId,
+            cellId: gridCellId,
+            entry: shouldKeepCellLayout
+              ? clearedCell
+              : {
+                  x: clearedCell.x,
+                  y: clearedCell.y,
+                },
+          }
+        : undefined
+    );
   }
 
   /**
@@ -684,7 +709,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
               imagePath: path,
             };
 
-            await this.addEntryToActiveGrid(newEntry);
+            await this.addEntryToActiveGrid(newEntry, gridCell.id);
           },
         });
         fp.render({ force: true });
@@ -1065,16 +1090,16 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     });
   }
 
-  addListeners() {
+  addListeners(element: HTMLElement = this.element) {
     this.listenerAbort?.abort();
     this.listenerAbort = new AbortController();
     const { signal } = this.listenerAbort;
 
-    this.element.querySelectorAll('.gm-screen-actions button, .gm-screen-grid-cell-header a').forEach((btn) => {
+    element.querySelectorAll('.gm-screen-actions button, .gm-screen-grid-cell-header a').forEach((btn) => {
       btn.addEventListener('click', (event) => this.handleClickEvent(event as MouseEvent), { signal });
     });
 
-    this.element.querySelector('.gm-screen-button')?.addEventListener(
+    element.querySelector('.gm-screen-button')?.addEventListener(
       'contextmenu',
       async () => {
         if (!getGame().user?.isGM) {
@@ -1703,6 +1728,6 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       isDndNpcStatBlock: false,
     };
 
-    await this.addEntryToActiveGrid(newEntry);
+    await this.addEntryToActiveGrid(newEntry, gridCell.id);
   }
 }
