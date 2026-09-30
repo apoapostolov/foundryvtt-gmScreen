@@ -1,22 +1,34 @@
 # GM Screen
 
-![Latest Release Download Count](https://img.shields.io/badge/dynamic/json?label=Downloads@latest&query=assets%5B1%5D.download_count&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsamulopez%2Ffoundryvtt-gmScreen%2Freleases%2Flatest)
-![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsamulopez%2Ffoundryvtt-gmScreen%2Fmain%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibility.verified&colorB=orange)
+*Keep the notes, tables, and creature sheets you reach for most in one place
+during a session.*
 
-This fork wouldn't exist without ElfFriend-DnD's work on the main repository.
+GM Screen gives GMs a tabbed grid they can fill with journals, roll tables,
+actors, and items. Open it from the corner of Foundry when the next rule or
+stat block comes up. Share selected tabs as a player cheat sheet, while
+keeping private material on the GM side.
+
+This is Apo's source fork of GM Screen. It has no published GitHub Release in
+this repository. The installation link below points to
+[samulopez's release](https://github.com/samulopez/foundryvtt-gmScreen/releases/latest),
+not a build of this fork. The fork owes its foundation to
+[ElfFriend-DnD's original project](https://github.com/ElfFriend-DnD/foundryvtt-gmScreen).
 
 [![ko-fi](https://img.shields.io/badge/-buy%20him%20a%20coke-%23FF5E5B)](https://ko-fi.com/elffriend)
 [![patreon](https://img.shields.io/badge/-patreon-%23FF424D)](https://www.patreon.com/ElfFriend_DnD)
 
 ![GM Screen Cover Image](readme-img/cover-image.png)
 
-Creates a tabbed modular grid that GMs can populate with journal entries, journal pages, rollable tables, actors, and items. Customize your "GM Screen" by dragging and dropping items into cells and have its information available at any time from a button on the bottom right of the UI, near the sidebar. Roll rollable tables, open linked entities, and even place actor sheets into these cells. Obviously the space constraints mean some sheets will work better than others.
-
-Additionally, any screen you create as GM can be set to be shared with players, so you can provide them with a cheat sheet that is always readily available to them. Be sure you set the permissions correctly on the entities themselves before trying to share them with players on a screen!
+Drag content into cells and organize the tabs around what you run. A cell can
+span more than one row or column, and a linked sheet can open at full size
+when you need to edit it. Shared tabs still respect the permissions on their
+underlying documents; check those permissions before showing a screen to
+players.
 
 ## Installation
 
-To install, search for "GM Screen" in your module browser inside Foundry VTT.
+To install the upstream module, search for **GM Screen** in Foundry's module
+browser. This fork does not publish an installable package of its own.
 
 Alternatively, you can manually install the module by following these steps:
 
@@ -82,7 +94,8 @@ Note that changing the grid dimensions after populating the grid might cause une
 
 ## Compatibility
 
-No information for compatibility with other modules is available at this time. The module is compatible with Foundry VTT v13.0.0 and later.
+This fork's source manifest targets Foundry VTT v14. Check the upstream
+release for the compatibility of the installable package linked above.
 
 ## Known Issues
 
