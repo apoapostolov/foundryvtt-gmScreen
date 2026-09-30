@@ -1,7 +1,17 @@
-# GM Screen
+<div align="center">
 
-*Keep the notes, tables, and creature sheets you reach for most in one place
-during a session.*
+  <h1>GM Screen</h1>
+
+  <p>Keep the notes, tables, and creature sheets you reach for most in one place during a session.</p>
+
+  <p>
+    <a href="https://github.com/apoapostolov/foundryvtt-gmScreen"><img src="https://img.shields.io/badge/Type-Foundry%20module-555" alt="Type: Foundry module"></a>
+    <a href="https://github.com/apoapostolov/foundryvtt-gmScreen"><img src="https://img.shields.io/badge/Language-TypeScript-555" alt="Primary language: TypeScript"></a>
+    <a href="https://github.com/apoapostolov/foundryvtt-gmScreen/releases"><img src="https://img.shields.io/badge/Status-Unreleased-555" alt="Unreleased"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-555" alt="License: MIT"></a>
+  </p>
+
+</div>
 
 GM Screen gives GMs a tabbed grid they can fill with journals, roll tables,
 actors, and items. Open it from the corner of Foundry when the next rule or
