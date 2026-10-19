@@ -96,6 +96,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
   draggedTab: HTMLElement | undefined;
 
   listenerAbort?: AbortController;
+
   pendingCellRefresh: PendingCellRefresh | undefined;
 
   constructor(options = {}) {
