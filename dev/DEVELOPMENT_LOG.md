@@ -57,3 +57,10 @@ Measured OSA v14.367: handle 28px, border `#000`, flush. Constrain: form 677px i
 - OSA proof: Keep -> default, Caves Overland -> qa tab, Keep -> default. Picker list parent BODY, 31 scenes, folder headers, no viewport spill. QA tab restored out of the world config.
 
 
+
+## 2026-09-30 â€” Center README header
+
+- Files changed: README.md.
+- Applied the shared centered title, outcome-first subtitle, and compact badge row; preserved existing product art and body content.
+- Verified the published release/version/date source and available license metadata; git diff --check passed before commit.
+- Commit: `8e0eddebad7ecc319f02e57b425657ee1696f5cc` (`docs: center README header`), target `https://github.com/apoapostolov/foundryvtt-gmScreen.git` branch `origin/main`.
