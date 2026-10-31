@@ -24,6 +24,7 @@ export enum MySettings {
   gmScreenConfig = 'gm-screen-config',
   migrated = 'migrated',
   condensedButton = 'condensedButton',
+  plainJournalCells = 'plain-journal-cells',
   constrainCellContent = 'constrain-cell-content',
   hiddenJournalSidebar = 'hidden-journal-sidebar',
   remapJournalPagesIndexFrom1 = 'remap-journal-pages-index-from-1',

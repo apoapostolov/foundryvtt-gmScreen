@@ -1615,6 +1615,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
     const drawerHeight = getGame().settings.get(MODULE_ID, MySettings.drawerHeight);
     const drawerOpacity = getGame().settings.get(MODULE_ID, MySettings.drawerOpacity);
     const condensedButton = getGame().settings.get(MODULE_ID, MySettings.condensedButton);
+    const plainJournalCells = getGame().settings.get(MODULE_ID, MySettings.plainJournalCells);
     const constrainCellContent = getGame().settings.get(MODULE_ID, MySettings.constrainCellContent);
     const hiddenJournalSidebar = getGame().settings.get(MODULE_ID, MySettings.hiddenJournalSidebar);
 
@@ -1630,6 +1631,7 @@ export class GmScreenApplication extends foundry.applications.api.HandlebarsAppl
       grids,
       isGM: !!getGame().user?.isGM,
       condensedButton,
+      plainJournalCells,
       constrainCellContent,
       hiddenJournalSidebar,
       data: this.data,
