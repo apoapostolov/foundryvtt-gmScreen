@@ -71,11 +71,61 @@ python C:/Users/theap/AppData/Local/hermes/skills/foundry/foundry-vtt-release-en
 
 Do not zip the repo root. `src/` is not the served package.
 
+## Upstream baseline (tracked)
+
+`apo/live-all` is rebased onto the upstream release pinned below. Update this
+block every time the personal copy is rebased; it is the reference that future
+backports diff against. Do not infer the baseline from tags alone, because
+upstream's `src/module.json` version string lags its own release tag.
+
+| Item | Value |
+| --- | --- |
+| Upstream release | `v6.3.0` |
+| Released | 2026-10-31 |
+| Upstream commit | `b4404b6185c0aa57950af14c6a4dc5079944403a` |
+| Upstream `src/module.json` version at that commit | `5.5.3` |
+| Personal copy version | `14.0.0` |
+
+Never take the module version from upstream; it reports `5.5.3` while shipping
+as `v6.3.0`. This copy stays `14.0.0`.
+
+Included from `v6.3.0`: export/import settings (`screenConfigTransfer.ts` plus
+the two menu actions), the window-content background fix, and the
+duplicate-cell-refresh rework.
+
+Deliberately skipped from `v6.3.0`: the devDependency bumps, `cf1ced2`
+(deps plus a compatibility minimum), and `4ffd27f` (removed an import this copy
+uses for the typed `GmScreenApi`). Upstream's lock resolves `fvtt-types` over
+`git+ssh`, which this npm refuses to fetch, so this copy keeps its own
+`package.json` and `package-lock.json`.
+
+To size the next batch:
+
+```bash
+git fetch upstream --tags
+git log --oneline --cherry-pick --right-only apo/live-all...v<NEXT>
+```
+
+To rebase the personal copy onto a new release:
+
+```bash
+git fetch upstream --tags
+git tag -f pre-rebase apo/live-all
+git rebase --onto v<NEXT> <merge-base-with-previous-release> -X theirs --empty=drop
+git diff --stat pre-rebase HEAD -- src/    # must show no dropped local feature
+npm run typecheck && npm run lint && npm run build
+```
+
+`-X theirs` resolves every conflict to the local commit and drops commits whose
+patch upstream already has, but it also drops individual lines when a hunk
+straddles a change. The `git diff` against `pre-rebase` is mandatory: it is how
+`MySettings.plainJournalCells` was caught missing after the `v6.3.0` rebase.
+
 ## Personal copy vs samulopez
 
 The non-fork is `samulopez/foundryvtt-gmScreen` (`upstream`). Ignore
-`original` (ElfFriend-DnD) unless asked. The personal copy is `apo/live-all`.
-Do not merge `upstream/main` into `apo/live-all`. Backport only.
+`original` (ElfFriend-DnD) unless asked. The personal copy is `apo/live-all`,
+rebased onto the baseline above rather than merged.
 
 Run this check when asked to sync, backport, or review upstream, and before
 you take samulopez work into the personal copy.
