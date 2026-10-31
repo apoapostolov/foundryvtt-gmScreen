@@ -64,3 +64,16 @@ Measured OSA v14.367: handle 28px, border `#000`, flush. Constrain: form 677px i
 - Applied the shared centered title, outcome-first subtitle, and compact badge row; preserved existing product art and body content.
 - Verified the published release/version/date source and available license metadata; git diff --check passed before commit.
 - Commit: `8e0eddebad7ecc319f02e57b425657ee1696f5cc` (`docs: center README header`), target `https://github.com/apoapostolov/foundryvtt-gmScreen.git` branch `origin/main`.
+
+## 2026-10-31 — Backport samulopez v6.3.0
+
+- Upstream baseline: `v6.3.0` (release 2026-10-31 11:54Z), tip `b4404b6`. Local base `apo/live-all` `0f52749`, merge-base `ec0462a`.
+- 26 commits were in `v6.3.0` but not local. `--cherry-pick --right-only` left 20; 18 were dependabot/devDependency bumps and were skipped, plus `cf1ced2` (deps + compatibility minimum) and `4ffd27f` (removed an import local code still uses for the typed `GmScreenApi` export).
+- `d791b06` (don't refresh other cells) was already local as `2049a1a`; same author, date, and behaviour. Upstream only hoisted the DragDrop wiring into `bindGridDragDrop`. No action.
+- Backported two commits on `apo/backport-v6.3.0`, then fast-forwarded into `apo/live-all`:
+  - `19ab009` fix: add background to window content. Conflict in `foundryvtt-gmScreen.scss` kept our `--gm-screen-button-border-color: #000` flush-handle edge and took upstream's `--gm-window-background`.
+  - `87288b6` feat: add export/import options. Adds `screenConfigTransfer.ts`, `ExportSettingsAction`, `ImportSettingsAction`, and the two `registerMenu` entries. Only `package-lock.json` conflicted; kept ours since `package.json` is untouched and dep bumps were skipped.
+- Feature is self-contained: `screenConfigTransfer.ts` imports only `gridTypes`, `helpers`, `constants`, and uses `MySettings.rows/columns/gmScreenConfig` — all present locally, so no local settings were displaced.
+- Verified: `npm run typecheck`, `npm run lint`, `npm run build` all clean. Bundle contains `gm-screen-export`; transfer lang keys present in all five languages.
+- Live sync from `dist/gm-screen`: 15 files, 0 failed, md5 match on js/css/module.json/lang. Live reports `14.0.0`; `gm-screen.lock` still U+1F512.
+- Not pushed. `AGENTS.md` keeps `apo/live-all` local, and this is not a PR candidate (ships `dev/` and version 14.0.0).
